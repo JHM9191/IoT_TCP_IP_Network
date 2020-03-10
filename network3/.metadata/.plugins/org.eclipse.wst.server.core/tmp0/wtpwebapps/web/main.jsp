@@ -166,14 +166,10 @@ select, option {
 						autofocus="autofocus"
 						style="width: 450px; height: 40px; font-size: 20px;">
 							<option value="">ALL</option>
-							<option value="/192.168.0.15">IoT_Client_JHM</option>
-							<option value="/192.168.43.2">/192.168.43.2(IoT_Client_1)</option>
-							<option value="IoT_Client_1">IoT_Client_1(/192.168.43.2)</option>
-							<option value="/192.168.0.6">JMJ</option>
-							<option value="/192.168.43.48">/192.168.43.48(jmj)</option>
-							<option value="jmj">jmj(/192.168.43.48)</option>
-							<option value="/70.12.231.236">70.12.231.236</option>
-							<option value="/70.12.224.85">70.12.224.85</option>
+							<option value="/70.12.231.236">IoT_Client_1(/70.12.231.236)</option>
+							<option value="/70.12.113.199">hyunchu(/70.12.113.199)</option>
+							<option value="/70.12.227.235">jmj(/70.12.227.235)</option>
+							<option value="/70.12.113.191">hennie(/70.12.113.191)</option>
 
 					</select></td>
 				</tr>
@@ -184,11 +180,11 @@ select, option {
 					<td align="center"><input type="radio" name="state" value="0">stop</td>
 
 				</tr>
-				<tr>
+				<!-- <tr>
 					<th>메세지</th>
 					<td colspan="2"><input type="text"
 						style="height: 40px; font-size: 20px;" size="40" name="txt"></td>
-				</tr>
+				</tr> -->
 
 			</table>
 		</div>

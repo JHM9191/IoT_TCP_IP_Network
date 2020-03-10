@@ -3,6 +3,9 @@ package com.example.pad;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,8 +15,11 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,9 +32,15 @@ public class MainActivity extends AppCompatActivity {
     String TAG = "===";
 
     // UI
-    TextView tvclient;
-    TextView tvserver;
-    TextView tv;
+//    TextView tvclient;
+//    TextView tvserver;
+//    TextView tv;
+
+    ListView listView;
+    TextView name1, name2, name3, name4,
+            data1, data2, data3, data4,
+            status;
+    ArrayAdapter<String> adapter;
 
 
     // Network
@@ -54,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         makeUi();
 
+
         serverReadyThread = new ServerReadyThread();
         serverReadyThread.start();
 
@@ -61,9 +74,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void makeUi() {
-        tvclient = findViewById(R.id.tvclient);
-        tvserver = findViewById(R.id.tvserver);
-        tv = findViewById(R.id.tv);
+        listView = findViewById(R.id.listView);
+        name1 = findViewById(R.id.name1);
+        name2 = findViewById(R.id.name2);
+        name3 = findViewById(R.id.name3);
+        name4 = findViewById(R.id.name4);
+        data1 = findViewById(R.id.data1);
+        data2 = findViewById(R.id.data2);
+        data3 = findViewById(R.id.data3);
+        data4 = findViewById(R.id.data4);
+        status = findViewById(R.id.status);
+//        tvclient = findViewById(R.id.tvclient);
+//        tvserver = findViewById(R.id.tvserver);
+//        tv = findViewById(R.id.tv);
         new ConnectThread(sip, sport, "pad").start();
     }
 
@@ -90,12 +113,12 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "socket = serverSocket.accept()");
                     new ReceiverThread(socket).start();
                     Log.d(TAG, "new ReceiverThread(socket).start()");
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            setList();
-//                        }
-//                    });
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            setList();
+                        }
+                    });
 
                 } catch (IOException e) {
 
@@ -105,9 +128,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setList() {
+    class SendServer extends Thread {
 
+        String urlstr = "http://70.12.231.236:8080/web/iotclient";
 
+        public SendServer(String id, String txt) {
+            urlstr += "?id=" + id + "&txt=" + txt;
+        }
+
+        @Override
+        public void run() {
+            try {
+                URL url = new URL(urlstr);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.getInputStream();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    public void setList() {
+        adapter = new ArrayAdapter<String>(
+                MainActivity.this,
+                android.R.layout.simple_list_item_1,
+                getIds()
+        );
+        adapter.notifyDataSetChanged();
+        listView.setAdapter(adapter);
     }
 
     class ReceiverThread extends Thread {
@@ -137,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 Msg msg = (Msg) ois.readObject();
                 Log.d(TAG, "msg.getId() : " + msg.getId());
-                displayData(msg);
+//                displayData(msg);
                 ids.put(socket.getInetAddress().toString(), msg.getId());
                 Log.d(TAG, "Client ID : " + msg.getId());
             } catch (ClassNotFoundException e) {
@@ -180,23 +230,67 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayData(final Msg msg) {
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.d(TAG, "msg.getId() : " + msg.getId());
+//        runOnUiThread(new Runnable() {
+////            @Override
+////            public void run() {
+////                Log.d(TAG, "msg.getId() : " + msg.getId());
+////
+////                if (msg.getId().equals("pad")) {
+////                    tvclient.setText("Client disconnected\nWaiting for client\nto reconnect ");
+////                    return;
+////                }
+////                if (msg.getTxt() == null || msg.getTxt().equals("")) {
+////                    tvclient.setText("Client connected\nID: " + msg.getId());
+////                    return;
+////                }
+////
+////                tv.setText(msg.getTxt());
+////            }
+////        });
 
-                if (msg.getId().equals("pad")) {
-                    tvclient.setText("Client disconnected\nWaiting for client\nto reconnect ");
-                    return;
+        final String id = msg.getId();
+        final String txt = msg.getTxt();
+        Log.d("---", listView.getCount() + "");
+        if (adapter.getPosition(id) == 0) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("---", adapter.getPosition(id) + "");
+                    name1.setText(id);
+                    data1.setText(txt);
                 }
-                if (msg.getTxt() == null || msg.getTxt().equals("")) {
-                    tvclient.setText("Client connected\nID: " + msg.getId());
-                    return;
+            });
+        } else if (adapter.getPosition(id) == 1) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("---", adapter.getPosition(id) + "");
+                    name2.setText(id);
+                    data2.setText(txt);
                 }
+            });
+        } else if (adapter.getPosition(id) == 2) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("---", adapter.getPosition(id) + "");
+                    name3.setText(id);
+                    data3.setText(txt);
+                }
+            });
+        } else if (adapter.getPosition(id) == 3) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("---", adapter.getPosition(id) + "");
+                    name4.setText(id);
+                    data4.setText(txt);
+                }
+            });
+        }
 
-                tv.setText(msg.getTxt());
-            }
-        });
+        new SendServer(msg.getId(), msg.getTxt()).start();
+
 
     }
 
@@ -274,6 +368,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public ArrayList<String> getIds() {
+        Collection<String>
+                id = ids.values();
+        Iterator<String> it = id.iterator();
+        ArrayList<String> list = new ArrayList<String>();
+        while (it.hasNext()) {
+            list.add(it.next());
+        }
+        return list;
+    }
+
+    public void ckbt(View v) {
+        Msg msg = null;
+        if (v.getId() == R.id.button) {
+            msg = new Msg("server", "1", null);
+        } else if (v.getId() == R.id.button2) {
+            msg = new Msg("server", "0", null);
+        }
+        sendMsg(msg);
+    }
+
+
     // --------------------------CLIENT MODULE --------------------------------//
     String tabid = "tab1";
 //    String sip = "192.168.43.2"; // phone hotspot ip
@@ -311,12 +427,21 @@ public class MainActivity extends AppCompatActivity {
                 //ssocket.setSoTimeout(2000);
                 ssocket = new Socket(ip, port);
 
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        tvserver.setText("Server Connected\n" + "IP: " + ssocket.getInetAddress().getHostAddress());
+//
+//                        Log.d("===", "hello : " + ssocket.getInetAddress().toString());
+//
+//                    }
+//                });
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tvserver.setText("Server Connected\n" + "IP: " + ssocket.getInetAddress().getHostAddress());
-
-                        Log.d("===", "hello : " + ssocket.getInetAddress().toString());
+                        status.setText(ssocket.getInetAddress().getHostAddress()
+                                + "\nConnected Sever");
+                        Log.d("===", ssocket.getInetAddress().toString());
 
                     }
                 });
@@ -328,20 +453,35 @@ public class MainActivity extends AppCompatActivity {
                 while (true) {
                     i++;
                     final int finalI = i;
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            tvserver.setText("Retry Connecting " + finalI + "\nIP: " + ip);
+//                        }
+//                    });
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            tvserver.setText("Retry Connecting " + finalI + "\nIP: " + ip);
+                            status.setText(ip + "Retry Connecting" + finalI);
                         }
                     });
                     // 재접속 시도 후 성공 시 text 변경 //
                     try {
                         Thread.sleep(500);
                         ssocket = new Socket(ip, port);
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                tvserver.setText("Server Connected\n" + "IP: " + ssocket.getInetAddress().getHostAddress());
+//                                Log.d("===", ssocket.getInetAddress().toString());
+//
+//                            }
+//                        });
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                tvserver.setText("Server Connected\n" + "IP: " + ssocket.getInetAddress().getHostAddress());
+                                status.setText(ssocket.getInetAddress().getHostAddress()
+                                        + "\nConnected Sever..");
                                 Log.d("===", ssocket.getInetAddress().toString());
 
                             }
@@ -438,9 +578,9 @@ public class MainActivity extends AppCompatActivity {
             String tid = values[0].getTid();
             String state = values[0].getTxt();
             Log.d("===", "ip : " + ip + ", state : " + state + ", tid : " + tid);
-            if (tv != null || !tv.equals("")) {
-                tv.setText(state);
-            }
+//            if (state != null || !state.equals("")) {
+                status.setText(state);
+//            }
             Msg msg = new Msg("server", state, tid);
             sendMsg(msg);
 

@@ -26,6 +26,7 @@ public class WebClientServlet extends HttpServlet {
            
            
            
+//        	client = new Client("70.12.224.85", 8888);
               client = new Client("70.12.231.236", 8888);
                 String ServerIp="70.12.231.236";
           
@@ -49,7 +50,7 @@ public class WebClientServlet extends HttpServlet {
       Msg msg= new Msg("fromservlet",txt,tid);
       client.startClient(msg);
       
-      
+      response.sendRedirect("main.jsp");
     }
     }
 
