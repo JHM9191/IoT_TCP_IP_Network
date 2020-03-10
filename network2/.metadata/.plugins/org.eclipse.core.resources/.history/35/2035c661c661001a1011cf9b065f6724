@@ -1,0 +1,12 @@
+package client;
+
+public class ClientTest {
+	public static void main(String[] args) {
+//		Client client = new Client("192.168.43.1", 8888, "IoT_Client_1");
+//		Client client = new Client("192.168.43.180", 8888, "IoT_Client_1");
+		Client client = new Client("192.168.43.53", 8888, "IoT_Client_1"); // hotspot 
+//		Client client = new Client("70.12.225.91", 8888, "IoT_Client_1"); // MULTI_GUEST tabserver ip
+
+	}
+	
+}

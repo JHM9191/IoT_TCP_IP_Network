@@ -1,0 +1,481 @@
+package com.example.pad;
+
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import msg.Msg;
+
+public class MainActivity extends AppCompatActivity {
+
+    // Common
+    String TAG = "===";
+
+    // UI
+    TextView tvclient;
+    TextView tvserver;
+    TextView tv;
+
+
+    // Network
+    ServerSocket serverSocket;
+    int port = 9999;
+    ServerReadyThread serverReadyThread;
+    HashMap<String, ObjectOutputStream> maps;
+    HashMap<String, String> ids;
+
+    // ServerReadyThread variables
+    boolean aflag = true;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // ActionBar 숨기기
+        getSupportActionBar().hide();
+
+        maps = new HashMap<>();
+        ids = new HashMap<>();
+
+        makeUi();
+
+        serverReadyThread = new ServerReadyThread();
+        serverReadyThread.start();
+
+
+    }
+
+    private void makeUi() {
+        tvclient = findViewById(R.id.tvclient);
+        tvserver = findViewById(R.id.tvserver);
+        tv = findViewById(R.id.tv);
+        new ConnectThread(sip, sport, "pad").start();
+    }
+
+    class ServerReadyThread extends Thread {
+
+        public ServerReadyThread() {
+
+            try {
+                serverSocket = new ServerSocket(port);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void run() {
+            while (aflag) {
+                Socket socket = null;
+                Log.d(TAG, "Server Ready");
+
+                try {
+                    socket = serverSocket.accept();
+                    Log.d(TAG, "socket = serverSocket.accept()");
+                    new ReceiverThread(socket).start();
+                    Log.d(TAG, "new ReceiverThread(socket).start()");
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            setList();
+//                        }
+//                    });
+
+                } catch (IOException e) {
+
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void setList() {
+
+
+    }
+
+    class ReceiverThread extends Thread {
+
+        InputStream is;
+        ObjectInputStream ois;
+
+        OutputStream os;
+        ObjectOutputStream oos;
+
+        Socket socket;
+
+
+        public ReceiverThread(Socket socket) {
+            this.socket = socket;
+            try {
+                this.is = socket.getInputStream();
+                this.ois = new ObjectInputStream(is);
+                this.os = socket.getOutputStream();
+                this.oos = new ObjectOutputStream(os);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            maps.put(socket.getInetAddress().toString(), oos);
+            Log.d(TAG, "Client IP : " + socket.getInetAddress().toString());
+            try {
+                Msg msg = (Msg) ois.readObject();
+                Log.d(TAG, "msg.getId() : " + msg.getId());
+                displayData(msg);
+                ids.put(socket.getInetAddress().toString(), msg.getId());
+                Log.d(TAG, "Client ID : " + msg.getId());
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        @Override
+        public void run() {
+            while (ois != null) {
+                Msg msg = null;
+                try {
+                    msg = (Msg) ois.readObject();
+
+                    Log.d(TAG, "ReceiverThread run() ois!=null");
+                    displayData(msg);
+
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+//                    e.printStackTrace();
+                    Log.d(TAG, "client disconnected");
+                    displayData(new Msg("pad", null, null));
+                    if (ois != null) {
+                        try {
+                            ois.close();
+                            return;
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    private void displayData(final Msg msg) {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "msg.getId() : " + msg.getId());
+
+                if (msg.getId().equals("pad")) {
+                    tvclient.setText("Client disconnected\nWaiting for client\nto reconnect ");
+                    return;
+                }
+                if (msg.getTxt() == null || msg.getTxt().equals("")) {
+                    tvclient.setText("Client connected\nID: " + msg.getId());
+                    return;
+                }
+
+                tv.setText(msg.getTxt());
+            }
+        });
+
+    }
+
+
+    public void sendMsg(Msg msg) {
+        String tid = msg.getTid();
+
+        if (tid == null || tid.equals("")) {
+            Sender sender =
+                    new Sender(msg);
+            sender.start();
+        } else {
+            Sender2 sender2 =
+                    new Sender2(msg);
+            sender2.start();
+        }
+
+    } // end sendMsg
+
+    class Sender extends Thread {
+        Msg msg;
+
+        public Sender(Msg msg) {
+            this.msg = msg;
+        }
+
+        @Override
+        public void run() {
+
+            Collection<ObjectOutputStream> cols = maps.values();
+            Iterator<ObjectOutputStream> its = cols.iterator();
+            while (its.hasNext()) {
+                try {
+                    its.next().writeObject(msg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    class Sender2 extends Thread {
+        Msg msg;
+
+        public Sender2(Msg msg) {
+            this.msg = msg;
+        }
+
+        @Override
+        public void run() {
+            String tid = msg.getTid();
+            try {
+                Collection<String> col = ids.keySet();
+                Iterator<String> it = col.iterator();
+                String sip = "";
+                while (it.hasNext()) {
+                    String key = it.next();
+                    if (ids.get(key).equals(tid)) {
+                        sip = key;
+                        Log.d("===", "key : " + key);
+                    }
+                }
+                Log.d("===", "sip : " + sip);
+                if (!sip.equals("")) {
+                    maps.get(sip).writeObject(msg);
+                } else {
+                    maps.get(tid).writeObject(msg);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+
+    // --------------------------CLIENT MODULE --------------------------------//
+    String tabid = "tab1";
+//    String sip = "192.168.43.2"; // phone hotspot ip
+    //    String sip = "192.168.0.15"; // home wifi ip
+    //    String sip = "70.12.113.219";
+
+    //    String sip = "70.12.224.85";
+    String sip = "70.12.231.236";
+    int sport = 8888;
+
+    Socket ssocket;
+
+
+    class ConnectThread extends Thread {
+
+        String ip;
+        int port;
+        String id;
+
+        public ConnectThread() {
+
+        }
+
+        public ConnectThread(String ip, int port, String id) {
+            this.ip = ip;
+            this.port = port;
+            this.id = id;
+        }
+
+        @Override
+        public void run() {
+            try {
+                // socket 찾는데 시간이 좀 걸리기때문에 시간제한을 둔다. //
+                Thread.sleep(500);
+                //ssocket.setSoTimeout(2000);
+                ssocket = new Socket(ip, port);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvserver.setText("Server Connected\n" + "IP: " + ssocket.getInetAddress().getHostAddress());
+
+                        Log.d("===", "hello : " + ssocket.getInetAddress().toString());
+
+                    }
+                });
+                // 에러 발생 시 재접속 시도 //
+            } catch (Exception e) {
+
+                int i = 0;
+
+                while (true) {
+                    i++;
+                    final int finalI = i;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tvserver.setText("Retry Connecting " + finalI + "\nIP: " + ip);
+                        }
+                    });
+                    // 재접속 시도 후 성공 시 text 변경 //
+                    try {
+                        Thread.sleep(500);
+                        ssocket = new Socket(ip, port);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tvserver.setText("Server Connected\n" + "IP: " + ssocket.getInetAddress().getHostAddress());
+                                Log.d("===", ssocket.getInetAddress().toString());
+
+                            }
+                        });
+                        break;
+                    } catch (Exception e1) {
+                        //e1.printStackTrace();
+                    }
+                }
+            }
+            try {
+                Log.d("===", ssocket.getInetAddress().toString());
+                SReceiver sreceiver = new SReceiver(ssocket);
+                sreceiver.execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }// run End
+
+    }// ConnectThread End
+
+
+    class SReceiver extends AsyncTask<Void, Msg, Void> {
+        InputStream is;
+        ObjectInputStream ois;
+        Socket socket;
+        OutputStream os;
+        ObjectOutputStream oos;
+
+        public SReceiver(Socket socket) throws IOException {
+            this.socket = socket;
+            is = socket.getInputStream();
+            ois = new ObjectInputStream(is);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            try {
+                os = socket.getOutputStream();
+                oos = new ObjectOutputStream(os);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Msg msg = new Msg("tabregister", null, null);
+            try {
+                oos.writeObject(msg);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            while (ois != null) {
+                Msg msg = null;
+                try {
+
+                    // 서버가 꺼지면 여기서 exception 발생 //
+                    msg = (Msg) ois.readObject();
+
+                    publishProgress(msg);
+
+                } catch (Exception e) {
+
+                    // 에러 발생 시 id System 으로 메시지 전송 //
+                    msg = new Msg("System", "Server disconnected", null);
+                    // 서버가 닫히면 다시 서버가 열릴 때 까지 접속을 재시도 해야 한다. //
+                    publishProgress(msg);
+                    break;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Msg... values) {
+
+            String id = values[0].getId();
+            // 위에서 에러가 나면 id 에 system 이라는 값을 주었다. //
+            if (id.equals("System")) {
+                if (ssocket != null) {
+                    try {
+                        ssocket.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                new ConnectThread(sip, sport, null).start();
+                return;
+            }// socket closed //
+            // 재접속하기위해 함수 호출  //
+            String ip = values[0].getId();
+            String tid = values[0].getTid();
+            String state = values[0].getTxt();
+            Log.d("===", "ip : " + ip + ", state : " + state + ", tid : " + tid);
+            if (tv != null || !tv.equals("")) {
+                tv.setText(state);
+            }
+            Msg msg = new Msg("server", state, tid);
+            sendMsg(msg);
+
+
+//            if (ip == null || ip.equals("")) {
+//
+//                if (state.trim().equals("1")) {
+//                    if (state.trim().equals("1")) {
+//                        msg = new Msg("server", state, "ydh");
+//                    } else if (state.trim().equals("2")) {
+//                        msg = new Msg("server", state, "jmj");
+//                    } else if (state.trim().equals("3")) {
+//                        msg = new Msg("server", state, "hennie");
+//                    } else if (state.trim().equals("4")) {
+//                        msg = new Msg("server", state, "JHM");
+//                    } else if (state.trim().equals("5")) {
+//                        msg = new Msg("server", state, "hyunchu");
+//                    }
+//                } else if (state.trim().equals("0") && state != null) {
+//                    Log.d("===", "ip : " + ip + ",state : " + state + ", txt : " + txt);
+//                    if (state.trim().equals("1")) {
+//                        msg = new Msg("server", "0", "ydh");
+//                    } else if (txt.trim().equals("2")) {
+//                        msg = new Msg("server", "0", "jmj");
+//                    } else if (txt.trim().equals("3")) {
+//                        msg = new Msg("server", "0", "hennie");
+//                    } else if (txt.trim().equals("4")) {
+//                        msg = new Msg("server", "0", "JHM");
+//                    } else if (txt.trim().equals("5")) {
+//                        msg = new Msg("server", "0", "hyunchu");
+//                    }
+//                }
+//                sendMsg(msg);
+//            }
+        }
+    }
+
+}
