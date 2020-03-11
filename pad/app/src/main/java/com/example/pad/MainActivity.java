@@ -130,13 +130,13 @@ public class MainActivity extends AppCompatActivity {
 
     class SendServer extends Thread {
 
-        String urlstr = "http://70.12.231.236:8080/web/iotclient";
+        String urlstr = "http://70.12.231.236:8080/webserver/iotclient";
 
         public SendServer(String id, String txt) {
             urlstr += "?id=" + id + "&txt=" + txt;
         }
 
-        @Override
+        @Override-
         public void run() {
             try {
                 URL url = new URL(urlstr);

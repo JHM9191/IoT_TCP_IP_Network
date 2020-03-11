@@ -2400,3 +2400,4 @@
 70.12.225.91 - - [10/Mar/2020:16:02:28 +0900] "GET /web/iotclient?id=IoT_Client_1&txt=44 HTTP/1.1" 200 -
 70.12.225.91 - - [10/Mar/2020:16:02:28 +0900] "GET /web/iotclient?id=IoT_Client_1&txt=39 HTTP/1.1" 200 -
 70.12.225.91 - - [10/Mar/2020:16:02:29 +0900] "GET /web/iotclient?id=IoT_Client_1&txt=18 HTTP/1.1" 200 -
+127.0.0.1 - - [10/Mar/2020:17:37:32 +0900] "GET / HTTP/1.1" 404 750

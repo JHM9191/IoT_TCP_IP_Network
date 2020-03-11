@@ -1,2 +1,51 @@
 2020-03-09 10:26:50,782 [Worker-2: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
 2020-03-10 10:20:42,551 [Worker-3: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2020-03-10 18:54:47,174 [Worker-142: Enabling Maven Dependency Management] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: web:web:0.0.1-SNAPSHOT @ /Users/johyunmin/IoT_TCP_IP_Network/network3/web/pom.xml.
+2020-03-10 18:54:48,009 [Worker-142: Enabling Maven Dependency Management] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /web/src
+2020-03-10 18:54:48,010 [Worker-142: Enabling Maven Dependency Management] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Not adding source folder /web/src/test/java because it overlaps with /web/src
+2020-03-10 18:54:49,405 [Worker-141: Building Project web] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2020-03-10 18:54:49,406 [Worker-141: Building Project web] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/johyunmin/IoT_TCP_IP_Network/network3/web/src/main/resources
+2020-03-10 18:54:49,408 [Worker-141: Building Project web] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2020-03-10 18:54:49,408 [Worker-141: Building Project web] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/johyunmin/IoT_TCP_IP_Network/network3/web/src/test/resources
+2020-03-10 18:54:50,595 [Worker-142: Enabling Maven Dependency Management] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2020-03-10 18:54:50,806 [Worker-142: Enabling Maven Dependency Management] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: web:web:0.0.1-SNAPSHOT @ /Users/johyunmin/IoT_TCP_IP_Network/network3/web/pom.xml.
+2020-03-10 18:54:51,368 [Worker-142: Enabling Maven Dependency Management] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /web/src
+2020-03-10 18:54:51,369 [Worker-142: Enabling Maven Dependency Management] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Not adding source folder /web/src/test/java because it overlaps with /web/src
+2020-03-10 18:54:52,974 [Worker-142: Enabling Maven Dependency Management] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Cleaning filtered folder for web
+2020-03-10 18:54:52,986 [Worker-142: Enabling Maven Dependency Management] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 2 sec
+2020-03-10 18:54:53,135 [Worker-141: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2020-03-10 18:54:53,136 [Worker-141: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/johyunmin/IoT_TCP_IP_Network/network3/web/src/main/resources
+2020-03-10 18:54:53,137 [Worker-141: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2020-03-10 18:54:53,137 [Worker-141: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/johyunmin/IoT_TCP_IP_Network/network3/web/src/test/resources
+2020-03-10 18:54:53,137 [Worker-141: Building workspace] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of web
+2020-03-10 18:54:53,138 [Worker-141: Building workspace] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for web
+2020-03-10 18:54:53,140 [Worker-141: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.apache.maven.plugins:maven-clean-plugin:jar:2.5 is missing, no dependency information available
+2020-03-10 18:54:53,144 [Worker-141: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2020-03-10 18:56:22,104 [Worker-146: Building workspace] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: web:web:0.0.1-SNAPSHOT @ /Users/johyunmin/IoT_TCP_IP_Network/network3/web/pom.xml.
+2020-03-10 18:56:22,377 [Worker-146: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2020-03-10 18:56:22,378 [Worker-146: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/johyunmin/IoT_TCP_IP_Network/network3/web/src/main/resources
+2020-03-10 18:56:22,379 [Worker-146: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2020-03-10 18:56:22,380 [Worker-146: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/johyunmin/IoT_TCP_IP_Network/network3/web/src/test/resources
+2020-03-10 18:56:22,380 [Worker-146: Building workspace] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of web
+2020-03-10 18:56:22,380 [Worker-146: Building workspace] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for web
+2020-03-10 18:56:22,382 [Worker-146: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2020-03-10 18:56:31,812 [Worker-146: Building workspace] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: web:web:0.0.1-SNAPSHOT @ /Users/johyunmin/IoT_TCP_IP_Network/network3/web/pom.xml.
+2020-03-10 18:56:32,051 [Worker-146: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2020-03-10 18:56:32,052 [Worker-146: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/johyunmin/IoT_TCP_IP_Network/network3/web/src/main/resources
+2020-03-10 18:56:32,053 [Worker-146: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2020-03-10 18:56:32,053 [Worker-146: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/johyunmin/IoT_TCP_IP_Network/network3/web/src/test/resources
+2020-03-10 18:56:32,053 [Worker-146: Building workspace] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of web
+2020-03-10 18:56:32,053 [Worker-146: Building workspace] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for web
+2020-03-10 18:56:32,056 [Worker-146: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2020-03-10 18:56:56,776 [Worker-146: Building workspace] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: web:web:0.0.1-SNAPSHOT @ /Users/johyunmin/IoT_TCP_IP_Network/network3/web/pom.xml.
+2020-03-10 18:56:57,009 [Worker-146: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2020-03-10 18:56:57,009 [Worker-146: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/johyunmin/IoT_TCP_IP_Network/network3/web/src/main/resources
+2020-03-10 18:56:57,010 [Worker-146: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2020-03-10 18:56:57,010 [Worker-146: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/johyunmin/IoT_TCP_IP_Network/network3/web/src/test/resources
+2020-03-10 18:56:57,011 [Worker-146: Building workspace] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of web
+2020-03-10 18:56:57,011 [Worker-146: Building workspace] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for web
+2020-03-10 18:56:57,013 [Worker-146: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2020-03-10 18:58:01,070 [Worker-144: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2020-03-10 18:58:01,071 [Worker-144: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/johyunmin/IoT_TCP_IP_Network/network3/web/src/main/resources
+2020-03-10 18:58:01,073 [Worker-144: Building workspace] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2020-03-10 18:58:01,074 [Worker-144: Building workspace] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/johyunmin/IoT_TCP_IP_Network/network3/web/src/test/resources
