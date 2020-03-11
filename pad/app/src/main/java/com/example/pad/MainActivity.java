@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
             urlstr += "?id=" + id + "&txt=" + txt;
         }
 
-        @Override-
+        @Override
         public void run() {
             try {
                 URL url = new URL(urlstr);
