@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">pad</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token : %s</string>
 </resources>

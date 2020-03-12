@@ -7,8 +7,14 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     ServerSocket serverSocket;
     int port = 9999;
     ServerReadyThread serverReadyThread;
-    HashMap<String, ObjectOutputStream> maps;
+    public static HashMap<String, ObjectOutputStream> maps;
     HashMap<String, String> ids;
 
     // ServerReadyThread variables
@@ -69,6 +75,17 @@ public class MainActivity extends AppCompatActivity {
 
         serverReadyThread = new ServerReadyThread();
         serverReadyThread.start();
+
+        FirebaseMessaging.getInstance().subscribeToTopic("temperature").addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                String msg = "subscribe to temperature complete";
+                if (!task.isSuccessful()) {
+                    msg = "subscribe to temperature fail";
+                }
+                Log.d(TAG, msg);
+            }
+        });
 
 
     }
@@ -580,7 +597,7 @@ public class MainActivity extends AppCompatActivity {
             String state = values[0].getTxt();
             Log.d("===", "ip : " + ip + ", state : " + state + ", tid : " + tid);
 //            if (state != null || !state.equals("")) {
-                status.setText(state);
+            status.setText(state);
 //            }
             Msg msg = new Msg("server", state, tid);
             sendMsg(msg);

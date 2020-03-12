@@ -60,9 +60,18 @@ public class ClientManageController {
 	}
 
 	@RequestMapping("/iotclient.top")
-	public void go(HttpServletRequest req, HttpServletResponse res) {
+	public void sendNotiFromIoTClient(HttpServletRequest req, HttpServletResponse res) {
 		String id = req.getParameter("id");
 		String txt = req.getParameter("txt");
+
+		if (Integer.parseInt(txt) >= 50) {
+			try {
+				res.sendRedirect("sendnotitoclient.top?id=" + id + "&txt=" + txt);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 		System.out.println("ID : " + id);
 		System.out.println("Data : " + txt);
@@ -97,6 +106,64 @@ public class ClientManageController {
 			e.printStackTrace();
 		}
 
+	}
+
+	@RequestMapping("/sendnotitoclient.top")
+	public void sendNotiFromManager(HttpServletRequest req) {
+		String id = req.getParameter("id");
+		String txt = req.getParameter("txt");
+		
+		URL url;
+		
+
+		/**
+	    {
+	       "notification": {
+	          "title": "JSA Notification",
+	          "body": "Happy Message!"
+	       },
+	       "data": {
+	          "Key-1": "JSA Data 1",
+	          "Key-2": "JSA Data 2"
+	       },
+	       "to": "/topics/JavaSampleApproach",
+	       "priority": "high"
+	    }
+	*/
+
+		try {
+			url = new URL("https://fcm.googleapis.com/fcm/send");
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setUseCaches(false);
+			conn.setDoInput(true);
+			conn.setDoOutput(true);
+
+			conn.setRequestProperty("Authorization", "key="
+					+ "AAAAVdP8m2Q:APA91bEBunCsGlFxxvUpSebrMvCsChSic-hCVKSwRipRB84Whar5gJNafydQc_PQSP6JLfflxeynTJ8zHO2ZJM2M_WZcrZPYIHMYpPgqah7xS7-wpU-ES5iG3RCYnGdkp6X_Eu5VboJ_");
+			conn.setRequestProperty("Content-Type", "application/json");
+
+			JSONObject message = new JSONObject();
+			
+//			message.put("to",
+//					"d5mywEIWuKg:APA91bEnl0jplW5jj6hYZq3pc3rzn_3HVvTiaayDg8m8CGikOxBS1_8LV43Yaz_qh_FwCulIzMYpniFzA-nrIfUKi_h4uCIJIrMshvpfW8d_QUaYgDjVV14wlnVhue2YWcjWkH5Yt6Sb");
+			message.put("to",
+					"/topics/temperature");
+			message.put("priority", "high");
+			
+			JSONObject notification = new JSONObject();
+			notification.put("title", id);
+			notification.put("body", "WARNING! 온도가 50도 이상 입니다. 서버에 받은 값 : "+ txt);
+
+			message.put("notification", notification);
+
+			OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
+			out.write(message.toString());
+			out.flush();
+			conn.getInputStream();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
