@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
     class SendServer extends Thread {
 
-        String urlstr = "http://70.12.231.236:8080/webserver/iotclient";
+        String urlstr = "http://15.165.163.102:80/webserver/iotclient";
 
         public SendServer(String id, String txt) {
             urlstr += "?id=" + id + "&txt=" + txt;
@@ -397,7 +397,8 @@ public class MainActivity extends AppCompatActivity {
     //    String sip = "70.12.113.219";
 
     //    String sip = "70.12.224.85";
-    String sip = "70.12.231.236";
+//    String sip = "70.12.231.236";
+    String sip = "52.78.108.32";
     int sport = 8888;
 
     Socket ssocket;

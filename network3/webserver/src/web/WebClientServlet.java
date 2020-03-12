@@ -27,8 +27,8 @@ public class WebClientServlet extends HttpServlet {
            
            
 //        	client = new Client("70.12.224.85", 8888);
-              client = new Client("70.12.231.236", 8888);
-                String ServerIp="70.12.231.236";
+              client = new Client("15.165.163.102", 8888);
+                String ServerIp="15.165.163.102";
           
 
 //             client = new Client("70.12.224.85", 8888);

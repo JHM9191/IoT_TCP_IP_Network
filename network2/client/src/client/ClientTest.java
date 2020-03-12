@@ -7,6 +7,7 @@ public class ClientTest {
 //		Client client = new Client("192.168.43.53", 9999, "IoT_Client_1"); // hotspot tabserver ip
 		Client client = new Client("70.12.225.91", 9999, "IoT_Client_1"); // MULTI_GUEST tabserver ip
 //		Client client = new  Client("70.12.230.140", 8888, "JHM");
+//		Client client = new  Client("192.168.43.2", 9999, "JHM");
 	}
 	
 }

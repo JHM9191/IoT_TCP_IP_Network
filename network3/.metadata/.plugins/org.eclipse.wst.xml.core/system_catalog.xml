@@ -202,4 +202,7 @@
   <system systemId="http://www.w3.org/2001/xml.xsd" uri="jar:file:/Applications/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.xsd_2.16.0.v20181220-0848.jar!/cache/www.w3.org/2001/xml.xsd"/>
   <uri name="http://www.w3.org/2001/XMLSchema" uri="jar:file:/Applications/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.xsd_2.16.0.v20181220-0848.jar!/cache/www.w3.org/2001/XMLSchema.xsd"/>
   <uri id="org.w3c.xinclude" name="http://www.w3.org/2001/XInclude" uri="jar:file:/Applications/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.wst.xsl.core_1.2.0.v201901071922.jar!/xslt-schemas/xinclude.xsd"/>
+  <public publicId="-//SPRING//DTD BEAN//EN" uri="platform:/plugin/org.springframework.beans/org/springframework/beans/factory/xml/spring-beans.dtd" webURL="https://www.springframework.org/dtd/spring-beans.dtd"/>
+  <public publicId="-//SPRING//DTD BEAN 2.0//EN" uri="jar:file:/Applications/Eclipse.app/Contents/Eclipse/plugins/org.springframework.beans_4.3.23.20190313-CI.jar!/org/springframework/beans/factory/xml/spring-beans-2.0.dtd" webURL="https://www.springframework.org/dtd/spring-beans-2.0.dtd"/>
+  <public publicId="-//LOG4J//DTD LOG4J//EN" uri="jar:file:/Applications/Eclipse.app/Contents/Eclipse/plugins/org.springsource.ide.eclipse.commons.ui_3.9.9.201906180559-RELEASE.jar!/dtd/log4j-1.2.dtd" webURL="https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd"/>
 </catalog>

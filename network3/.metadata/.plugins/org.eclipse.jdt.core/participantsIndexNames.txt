@@ -9,3 +9,5 @@ INDEX VERSION 1.131
 /web_temp/src
 /Users/johyunmin/IoT_TCP_IP_Network/network3/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1009225441.index
 /web_temp/src
+/Users/johyunmin/IoT_TCP_IP_Network/network3/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2187349142.index
+/webspringserver/src

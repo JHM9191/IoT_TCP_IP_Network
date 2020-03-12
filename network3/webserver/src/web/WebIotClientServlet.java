@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Servlet implementation class WebIotClientServlet
@@ -46,19 +47,24 @@ public class WebIotClientServlet extends HttpServlet {
 		conn.setRequestProperty("Content-Type", "application/json");
 
 		JSONObject json = new JSONObject();
-		json.put("to",
-				"cmm9ME4d9Ss:APA91bGxP8xrtRCzEof13dArAAuJKGODYi7uejryVTxkdndEoUxC0NTw2LbNNhUizHS38syfGTmHRBRUzCXj5HLgkQcb2XYeE4eiyGG-kKHSU-OPbSet2AMU_yjv0gQMg0RDLhNy920d");
+		try {
+			json.put("to",
+					"cmm9ME4d9Ss:APA91bGxP8xrtRCzEof13dArAAuJKGODYi7uejryVTxkdndEoUxC0NTw2LbNNhUizHS38syfGTmHRBRUzCXj5HLgkQcb2XYeE4eiyGG-kKHSU-OPbSet2AMU_yjv0gQMg0RDLhNy920d");
+			JSONObject info = new JSONObject();
+			info.put("title", id);
+			info.put("body", txt);
 
-		JSONObject info = new JSONObject();
-		info.put("title", id);
-		info.put("body", txt);
+			json.put("notification", info);
 
-		json.put("notification", info);
+			OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
+			out.write(json.toString());
+			out.flush();
+			conn.getInputStream();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
-		out.write(json.toString());
-		out.flush();
-		conn.getInputStream();
 	}
 
 }
