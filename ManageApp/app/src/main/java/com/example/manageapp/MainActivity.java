@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     class SendWebServer extends Thread {
 
-        String urlstr = "http://15.165.163.102:80/webserver/webclient";
+        String urlstr = "http://192.168.43.2:8080/webspringserver/webclient.top";
 
 
         public SendWebServer(String ip, String state) {

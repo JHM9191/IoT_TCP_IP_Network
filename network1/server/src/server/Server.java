@@ -236,9 +236,9 @@ public class Server {
 			System.out.println("Sender2 run() msg.getTid : " + msg.getTid());
 			try {
 //				maps.get("/192.168.43.180").writeObject(msg);
-//				maps.get("/192.168.43.53").writeObject(msg);
+				maps.get("/192.168.43.53").writeObject(msg);
 
-				maps.get("/70.12.225.91").writeObject(msg);
+//				maps.get("/70.12.225.91").writeObject(msg);
 			} catch (
 
 			IOException e) {
