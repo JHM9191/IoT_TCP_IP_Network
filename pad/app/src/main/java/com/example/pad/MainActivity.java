@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     int port = 9999;
     ServerReadyThread serverReadyThread;
     public static HashMap<String, ObjectOutputStream> maps;
-    HashMap<String, String> ids;
+    public static HashMap<String, String> ids;
 
     // ServerReadyThread variables
     boolean aflag = true;

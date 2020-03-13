@@ -63,16 +63,36 @@ public class ClientManageController {
 	public void sendNotiFromIoTClient(HttpServletRequest req, HttpServletResponse res) {
 		String id = req.getParameter("id");
 		String txt = req.getParameter("txt");
+		System.out.println(id + " " + txt);
+		if (txt == null | txt.equals("null")) {
+			return;
+		}
+		int val = Integer.parseInt(txt);
 
-		if (Integer.parseInt(txt) >= 50) {
-			try {
-				res.sendRedirect("sendnotitoclient.top?id=" + id + "&txt=" + txt);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if (id.equals("CAN_1_temperature")) {
+			if (val >= 90) {
+				val = 1;
+			} else if (val <= 20) {
+				val = 0;
+			} else if (val < 90 && val > 20) {
+				val = Integer.parseInt(txt.trim());
+			}
+		} else if (id.equals("CAN_2_humidity")) {
+			if (val >= 90) {
+				val = 1;
+			} else if (val <= 20) {
+				val = 0;
+			} else if (val < 90 && val > 20) {
+				val = Integer.parseInt(txt.trim());
 			}
 		}
 
+		try {
+			res.sendRedirect("sendnotitoclient.top?id=" + id + "&txt=" + val);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("ID : " + id);
 		System.out.println("Data : " + txt);
 
@@ -112,24 +132,14 @@ public class ClientManageController {
 	public void sendNotiFromManager(HttpServletRequest req) {
 		String id = req.getParameter("id");
 		String txt = req.getParameter("txt");
-		
+
 		URL url;
-		
 
 		/**
-	    {
-	       "notification": {
-	          "title": "JSA Notification",
-	          "body": "Happy Message!"
-	       },
-	       "data": {
-	          "Key-1": "JSA Data 1",
-	          "Key-2": "JSA Data 2"
-	       },
-	       "to": "/topics/JavaSampleApproach",
-	       "priority": "high"
-	    }
-	*/
+		 * { "notification": { "title": "JSA Notification", "body": "Happy Message!" },
+		 * "data": { "Key-1": "JSA Data 1", "Key-2": "JSA Data 2" }, "to":
+		 * "/topics/JavaSampleApproach", "priority": "high" }
+		 */
 
 		try {
 			url = new URL("https://fcm.googleapis.com/fcm/send");
@@ -143,16 +153,15 @@ public class ClientManageController {
 			conn.setRequestProperty("Content-Type", "application/json");
 
 			JSONObject message = new JSONObject();
-			
+
 //			message.put("to",
 //					"d5mywEIWuKg:APA91bEnl0jplW5jj6hYZq3pc3rzn_3HVvTiaayDg8m8CGikOxBS1_8LV43Yaz_qh_FwCulIzMYpniFzA-nrIfUKi_h4uCIJIrMshvpfW8d_QUaYgDjVV14wlnVhue2YWcjWkH5Yt6Sb");
-			message.put("to",
-					"/topics/temperature");
+			message.put("to", "/topics/temperature");
 			message.put("priority", "high");
-			
+
 			JSONObject notification = new JSONObject();
 			notification.put("title", id);
-			notification.put("body", "WARNING! 온도가 50도 이상 입니다. 서버에 받은 값 : "+ txt);
+			notification.put("body", txt);
 
 			message.put("notification", notification);
 

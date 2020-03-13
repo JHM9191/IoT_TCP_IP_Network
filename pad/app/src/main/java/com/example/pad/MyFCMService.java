@@ -18,6 +18,16 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import msg.Msg;
+
+import static com.example.pad.MainActivity.maps;
+
 public class MyFCMService extends FirebaseMessagingService {
 
     String TAG = "===";
@@ -31,12 +41,23 @@ public class MyFCMService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
 
 
-        MainActivity.maps.get("");
         title = remoteMessage.getNotification().getTitle();
         msg = remoteMessage.getNotification().getBody();
 
+
         Log.d(TAG, "title : " + title + " msg : " + msg);
 
+        HashMap<String, ObjectOutputStream> iotmaps = MainActivity.maps;
+
+        Collection<ObjectOutputStream> cols = iotmaps.values();
+        Iterator<ObjectOutputStream> its = cols.iterator();
+        while (its.hasNext()) {
+            try {
+                its.next().writeObject(new Msg(title, msg, "iot"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         String channelId = "channel";
         String channelName = "Channel_name";
