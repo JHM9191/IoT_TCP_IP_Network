@@ -1,4 +1,4 @@
-# IoT TCP/IP Network(작성중)
+IoT TCP/IP Network(작성중)
 
    
 
@@ -68,7 +68,7 @@
 3. **Server**
    - 서버는 웹서버와 pad 사이에서 데이터를 주고 받을 수 있게 중간다리 역할을 합니다.
    - 양쪽간의 통신은 TCP/IP 방식을 사용합니다.
-   - 웹버버와 서버는 TCP/IP 통신을 통해서 값을 전달 받고 
+   - 웹서버와 서버는 TCP/IP 통신을 통해서 값을 전달 받고 
    - 서버와 pad 또한 TCP/IP 통신을 통해 값을 주고 받습니다.
 4. **Web Server**
    - 웹서버는 현재 FCM notification 기능을 수행하기 위한 코드로 이루어져 있습니다.
@@ -113,6 +113,66 @@
 
 
 
+
+# 4. 실행 결과 화면
+
+- 브라우저에서 `http://15.165.163.102/webspringserver` 로 접속하면 뜨는 화면: 
+
+![main.top](./img/main.png)
+
+
+
+- ManageApp 실행: 
+
+<img src="./img/ManageApp.jpeg" alt="ManageApp 실행화면 " style="zoom:33%;" />
+
+
+
+- pad 실행:
+
+![pad_app_turnon](./img/pad_app_turnon.png)
+
+
+
+- Server 실행 후 pad에 접속 되었는지 확인:
+
+![pad_connected_to_server](./img/pad_connected_to_server.png)
+
+
+
+- 장비 접속됨:
+
+![pad_connected_client](./img/pad_connected_client.png)
+
+
+
+- ManageApp에서 모든 장비 시작 제어 메세지 보내기: 
+
+<img src="./img/ManageApp.jpeg" alt="ManageApp 실행화면 " style="zoom:33%;" />
+
+
+
+- ManageApp으로 부터 시작 제어 메세지를 받아서 장비가 시작된 화면: 
+
+![pad_start](./img/pad_ManageApp_send_start.png)
+
+
+
+
+
+- ManageApp에 장비들로 부터 발생된 값을 notification으로 받음: 
+
+<img src="./img/ManageApp_start.jpeg" alt="ManageApp notification " style="zoom:33%;" />
+
+
+
+
+
+- data가 특정 조건에 도달하여 웹서버가 pad에게 notificiation을 보냄:
+  - 0 : data 가 20 이하인 경우
+  - 1 : data 가 90 이상인 경우 
+
+![pad_webspringserver_send_0](./img/pad_webspringserver_send_0.png)
 
 
 
