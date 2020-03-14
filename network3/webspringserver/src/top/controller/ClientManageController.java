@@ -128,7 +128,7 @@ public class ClientManageController {
 
 		// send data to firebase (http method)
 		try {
-			OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
+			OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
 			out.write(message.toString());
 			out.flush();
 			conn.getInputStream();
@@ -181,7 +181,7 @@ public class ClientManageController {
 
 		// send data to firebase (http method)
 		try {
-			OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
+			OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream(), "UTF-8");
 			out.write(message.toString());
 			out.flush();
 			conn.getInputStream();
