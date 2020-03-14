@@ -82,7 +82,7 @@
 6. **Firebase Cloud Messaging**
    - 실시간으로 notification을 보낼 수 있습니다.
    - 특정 토큰을 가지고 있는 혹은 특정 주제를 구독을 하고 있는 기기에 Firebase의 서비스를 통해 remoteMessage를 보냅니다.
-   - 현제 웹서버에서 장비에서 발생되는 모든 데이터를 ManageApp에 FCM을 통해서 notification을 보내도록 설정되어 있습니다.
+   - 현재 웹서버에서 장비에서 발생되는 모든 데이터를 ManageApp에 FCM을 통해서 notification을 보내도록 설정되어 있습니다.
      - ManageApp가 구독한 주제: **temperature_manage**
    - 또한 웹서버에서 특정 조건에 해당할 시에 pad에 FCM을 통해 notification을 보내게 되어 있습니다.
      - pad가 구독한 주제: **temperature**
