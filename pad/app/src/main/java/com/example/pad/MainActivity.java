@@ -1,5 +1,6 @@
 package com.example.pad;
 
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -86,8 +87,17 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, msg);
             }
         });
+    }
 
-
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void makeUi() {
@@ -147,7 +157,9 @@ public class MainActivity extends AppCompatActivity {
 
     class SendServer extends Thread {
 
-        String urlstr = "http://192.168.43.2:8080/webspringserver/iotclient.top";
+        //        String urlstr = "http://192.168.43.2:8080/webspringserver/iotclient.top";
+//        String urlstr = "http://52.78.108.32:8888/webspringserver/iotclient.top"; // AWS donghyun
+        String urlstr = "http://15.165.163.102:8080/webspringserver/iotclient.top"; // AWS hyunmin
 
         public SendServer(String id, String txt) {
             urlstr += "?id=" + id + "&txt=" + txt;
@@ -231,6 +243,12 @@ public class MainActivity extends AppCompatActivity {
 //                    e.printStackTrace();
                     Log.d(TAG, "client disconnected");
                     displayData(new Msg("pad", null, null));
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            setList();
+                        }
+                    });
                     if (ois != null) {
                         try {
                             ois.close();
@@ -415,7 +433,9 @@ public class MainActivity extends AppCompatActivity {
 
     //    String sip = "70.12.224.85";
 //    String sip = "70.12.231.236";
-    String sip = "192.168.43.2";
+//    String sip = "192.168.43.2";
+//    String sip = "52.78.108.32"; // AWS donghyun
+    String sip = "15.165.163.102"; // AWS hyunmin
     int sport = 8888;
 
     Socket ssocket;
@@ -544,7 +564,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Msg msg = new Msg("tabregister", null, null);
+            Msg msg = new Msg("tab_JHM", "tab_JHM_connected", null);
             try {
                 oos.writeObject(msg);
             } catch (IOException e) {

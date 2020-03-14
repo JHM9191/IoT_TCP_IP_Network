@@ -77,7 +77,6 @@ INDEX VERSION 1.131+/Users/johyunmin/IoT_TCP_IP_Network/network3/.metadata/.plug
 606544058.index
 3732684322.index
 2758990811.index
-1102568431.index
 2173271022.index
 3502114468.index
 2026068716.index

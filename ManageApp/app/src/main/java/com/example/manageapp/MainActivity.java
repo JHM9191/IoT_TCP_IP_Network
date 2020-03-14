@@ -1,5 +1,6 @@
 package com.example.manageapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -8,6 +9,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -28,6 +33,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         makeUi();
+
+        FirebaseMessaging.getInstance().subscribeToTopic("temperature_manage").addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                String msg = "subscribe to temperature complete";
+                if (!task.isSuccessful()) {
+                    msg = "subscribe to temperature fail";
+                }
+                Log.d(TAG, msg);
+            }
+        });
     }
 
     private void makeUi() {
@@ -61,7 +77,9 @@ public class MainActivity extends AppCompatActivity {
 
     class SendWebServer extends Thread {
 
-        String urlstr = "http://192.168.43.2:8080/webspringserver/webclient.top";
+//        String urlstr = "http://52.78.108.32:8080/webspringserver/webclient.top"; // AWS donghyun
+        String urlstr = "http://15.165.163.102:8080/webspringserver/webclient.top"; // AWS hyunmin
+//        String urlstr = "http://192.168.43.2:8080/webspringserver/webclient.top";
 
 
         public SendWebServer(String ip, String state) {

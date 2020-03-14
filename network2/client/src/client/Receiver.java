@@ -61,7 +61,7 @@ public class Receiver extends Thread {
 				System.out.println(msg.getTxt() + "1");
 				System.out.println(msg.getTid());
 
-				if (msg.getTid() == null | msg.getTid().equals("")) {
+//				if (msg.getTid() == null | msg.getTid().equals("") | msg.getTid().equals("null")) {
 					System.out.println(msg.getTxt() + "2");
 					if (msg.getTxt().equals("1")) {
 						System.out.println(msg.getTxt() + "3");
@@ -70,16 +70,16 @@ public class Receiver extends Thread {
 					} else if (msg.getTxt().equals("0")) {
 						sendData.setFlag(false);
 					}
-				} else if (msg.getTid().equals("iot")) {
-					System.out.println("iot");
-					if (msg.getTxt().equals("1")) {
-						System.out.println(msg.getTxt() + "3");
-						sendData.setFlag(true);
-						new Thread(sendData).start();
-					} else if (msg.getTxt().equals("0")) {
-						sendData.setFlag(false);
-					}
-				}
+//				} else if (msg.getTid().equals("iot")) {
+//					System.out.println("iot");
+//					if (msg.getTxt().equals("1")) {
+//						System.out.println(msg.getTxt() + "3");
+//						sendData.setFlag(true);
+//						new Thread(sendData).start();
+//					} else if (msg.getTxt().equals("0")) {
+//						sendData.setFlag(false);
+//					}
+//				}
 
 			} catch (Exception e) {
 				while (true) {

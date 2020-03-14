@@ -158,20 +158,12 @@ public class Server {
 
 				} catch (Exception e) {
 					e.printStackTrace();
-					// 비정상 종료허여도 어떤 사람이 나가는지 확인 가능. //
+					// 비정상 종료하여도 어떤 사람이 나가는지 확인 가능. //
 					maps.remove(socket.getInetAddress().toString());
 					System.out.println(socket.getInetAddress() + ":Exit");
 					System.out.println("Visitor size : " + maps.size());
 					break; // dis.readUTF 에 문제가 생기면 while roop 중단.
-				}
-//				try {
-//					System.out.println("hello");
-//					ois.close();
-//					break;
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+				} 
 			}
 
 			System.out.println("ois == null");
@@ -236,8 +228,9 @@ public class Server {
 			System.out.println("Sender2 run() msg.getTid : " + msg.getTid());
 			try {
 //				maps.get("/192.168.43.180").writeObject(msg);
-				maps.get("/192.168.43.53").writeObject(msg);
-
+//				maps.get("/192.168.43.53").writeObject(msg);
+//				maps.get("/192.168.43.111").writeObject(msg);
+				maps.get(ip).writeObject(msg);
 //				maps.get("/70.12.225.91").writeObject(msg);
 			} catch (
 
@@ -252,18 +245,18 @@ public class Server {
 	// 접속한 사용자에게 메시지 보내기.//
 	public void sendMsg(Msg msg) {
 		System.out.println("sendMsg(Msg msg) entered");
-//		String ip = msg.getTid();
+		String ip = msg.getTid();
 		// null 을 항상 먼저 비교하자. //
-//		if (ip == null || ip.equals("")) {
-		// 전체에 broadcast //
-//		Sender sender = new Sender(msg);
-//		sender.start();
-//		} else {
-		// 한명에게 //
-		System.out.println("Sender2");
-		Sender2 sender2 = new Sender2(msg);
-		sender2.start();
-//		}
+		if (ip == null || ip.equals("")) {
+//		 전체에 broadcast //
+			Sender sender = new Sender(msg);
+			sender.start();
+		} else {
+			// 한명에게 //
+			System.out.println("Sender2");
+			Sender2 sender2 = new Sender2(msg);
+			sender2.start();
+		}
 	}
 
 	public void serverStart() {

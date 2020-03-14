@@ -3,6 +3,7 @@ package top.controller;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,13 +33,14 @@ public class ClientManageController {
 //	           client = new Client("70.12.113.191",8888);
 //	           String ServerIp="70.12.113.191";
 //			client = new Client("70.12.224.85", 8888);
-//			client = new Client("15.165.163.102", 8888);
-			client = new Client("192.168.43.2", 8888);
-			String ServerIp = "192.168.43.2";
+//			client = new Client("15.165.163.102", 8888); // AWS donghyun
+//			client = new Client("192.168.43.2", 8888);
+			String serverIp = "15.165.163.102"; // AWS hyunmin
+			client = new Client(serverIp, 8888); // AWS hyunmin
 
 //	             client = new Client("70.12.224.85", 8888);
 //	             String ServerIp="70.12.224.85";
-			Msg msg = new Msg(ServerIp, null);
+			Msg msg = new Msg(serverIp, null);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -53,7 +55,6 @@ public class ClientManageController {
 		try {
 			res.sendRedirect("main.top");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -65,112 +66,127 @@ public class ClientManageController {
 		String txt = req.getParameter("txt");
 		System.out.println(id + " " + txt);
 		if (txt == null | txt.equals("null")) {
+			System.out.println("txt == null | txt.equals(\"null\")");
+			System.out.println("Pad connected");
 			return;
 		}
+
+		// send notification to pad only when data is in some conditions
 		int val = Integer.parseInt(txt);
-
-		if (id.equals("CAN_1_temperature")) {
-			if (val >= 90) {
-				val = 1;
-			} else if (val <= 20) {
-				val = 0;
-			} else if (val < 90 && val > 20) {
-				val = Integer.parseInt(txt.trim());
+		if (val >= 90) { // if data is greater than 90, send 1 to pad
+			val = 1;
+			try {
+				res.sendRedirect("sendnotitopad.top?id=" + id + "&txt=" + val);
+			} catch (IOException e) {
+				System.out.println("Error while redirecting to sendnotitopad.top when val >=90 | IOException");
+				e.printStackTrace();
 			}
-		} else if (id.equals("CAN_2_humidity")) {
-			if (val >= 90) {
-				val = 1;
-			} else if (val <= 20) {
-				val = 0;
-			} else if (val < 90 && val > 20) {
-				val = Integer.parseInt(txt.trim());
+		} else if (val <= 20) { // if data is less than 20, send 0 to pad
+			val = 0;
+			try {
+				res.sendRedirect("sendnotitopad.top?id=" + id + "&txt=" + val);
+			} catch (IOException e) {
+				System.out.println("Error while redirecting to sendnotitopad.top when val <=20 | IOException");
+				e.printStackTrace();
 			}
 		}
 
-		try {
-			res.sendRedirect("sendnotitoclient.top?id=" + id + "&txt=" + val);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("ID : " + id);
-		System.out.println("Data : " + txt);
-
-		URL url;
+		// send notification to manageApp regardless of the said conditions above
+		URL url = null;
 		try {
 			url = new URL("https://fcm.googleapis.com/fcm/send");
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setUseCaches(false);
-			conn.setDoInput(true);
-			conn.setDoOutput(true);
-
-			conn.setRequestProperty("Authorization", "key="
-					+ "AAAAVdP8m2Q:APA91bEBunCsGlFxxvUpSebrMvCsChSic-hCVKSwRipRB84Whar5gJNafydQc_PQSP6JLfflxeynTJ8zHO2ZJM2M_WZcrZPYIHMYpPgqah7xS7-wpU-ES5iG3RCYnGdkp6X_Eu5VboJ_");
-			conn.setRequestProperty("Content-Type", "application/json");
-
-			JSONObject json = new JSONObject();
-			json.put("to",
-					"cmm9ME4d9Ss:APA91bGxP8xrtRCzEof13dArAAuJKGODYi7uejryVTxkdndEoUxC0NTw2LbNNhUizHS38syfGTmHRBRUzCXj5HLgkQcb2XYeE4eiyGG-kKHSU-OPbSet2AMU_yjv0gQMg0RDLhNy920d");
-			JSONObject info = new JSONObject();
-			info.put("title", id);
-			info.put("body", txt);
-
-			json.put("notification", info);
-
-			OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
-			out.write(json.toString());
-			out.flush();
-			conn.getInputStream();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (MalformedURLException e) {
+			System.out.println("Error while creating Firebase URL | MalformedURLException");
 			e.printStackTrace();
 		}
-
-	}
-
-	@RequestMapping("/sendnotitoclient.top")
-	public void sendNotiFromManager(HttpServletRequest req) {
-		String id = req.getParameter("id");
-		String txt = req.getParameter("txt");
-
-		URL url;
-
-		/**
-		 * { "notification": { "title": "JSA Notification", "body": "Happy Message!" },
-		 * "data": { "Key-1": "JSA Data 1", "Key-2": "JSA Data 2" }, "to":
-		 * "/topics/JavaSampleApproach", "priority": "high" }
-		 */
-
+		HttpURLConnection conn = null;
 		try {
-			url = new URL("https://fcm.googleapis.com/fcm/send");
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setUseCaches(false);
-			conn.setDoInput(true);
-			conn.setDoOutput(true);
+			conn = (HttpURLConnection) url.openConnection();
+		} catch (IOException e) {
+			System.out.println("Error while createing connection with Firebase URL | IOException");
+			e.printStackTrace();
+		}
+		conn.setUseCaches(false);
+		conn.setDoInput(true);
+		conn.setDoOutput(true);
+		conn.setRequestProperty("Content-Type", "application/json");
 
-			conn.setRequestProperty("Authorization", "key="
-					+ "AAAAVdP8m2Q:APA91bEBunCsGlFxxvUpSebrMvCsChSic-hCVKSwRipRB84Whar5gJNafydQc_PQSP6JLfflxeynTJ8zHO2ZJM2M_WZcrZPYIHMYpPgqah7xS7-wpU-ES5iG3RCYnGdkp6X_Eu5VboJ_");
-			conn.setRequestProperty("Content-Type", "application/json");
+		// set my firebase server key
+		conn.setRequestProperty("Authorization", "key="
+				+ "AAAAVdP8m2Q:APA91bEBunCsGlFxxvUpSebrMvCsChSic-hCVKSwRipRB84Whar5gJNafydQc_PQSP6JLfflxeynTJ8zHO2ZJM2M_WZcrZPYIHMYpPgqah7xS7-wpU-ES5iG3RCYnGdkp6X_Eu5VboJ_");
 
-			JSONObject message = new JSONObject();
-
+		// create notification message into JSON format
+		JSONObject message = new JSONObject();
 //			message.put("to",
-//					"d5mywEIWuKg:APA91bEnl0jplW5jj6hYZq3pc3rzn_3HVvTiaayDg8m8CGikOxBS1_8LV43Yaz_qh_FwCulIzMYpniFzA-nrIfUKi_h4uCIJIrMshvpfW8d_QUaYgDjVV14wlnVhue2YWcjWkH5Yt6Sb");
-			message.put("to", "/topics/temperature");
-			message.put("priority", "high");
+//					"cmm9ME4d9Ss:APA91bGxP8xrtRCzEof13dArAAuJKGODYi7uejryVTxkdndEoUxC0NTw2LbNNhUizHS38syfGTmHRBRUzCXj5HLgkQcb2XYeE4eiyGG-kKHSU-OPbSet2AMU_yjv0gQMg0RDLhNy920d");
+		message.put("to", "/topics/temperature_manage");
+		message.put("priority", "high");
+		JSONObject notification = new JSONObject();
+		notification.put("title", id);
+		notification.put("body", txt);
+		message.put("notification", notification);
 
-			JSONObject notification = new JSONObject();
-			notification.put("title", id);
-			notification.put("body", txt);
-
-			message.put("notification", notification);
-
+		// send data to firebase (http method)
+		try {
 			OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
 			out.write(message.toString());
 			out.flush();
 			conn.getInputStream();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Error while writing outputstream to firebase sending to ManageApp | IOException");
+			e.printStackTrace();
+		}
+
+	}
+
+	@RequestMapping("/sendnotitopad.top")
+	public void sendNotiFromManager(HttpServletRequest req) {
+		String id = req.getParameter("id");
+		String txt = req.getParameter("txt");
+
+		// send notification to pad
+		URL url = null;
+		try {
+			url = new URL("https://fcm.googleapis.com/fcm/send");
+		} catch (MalformedURLException e) {
+			System.out.println("Error while creating Firebase URL | MalformedURLException");
+			e.printStackTrace();
+		} // firebase URL
+		HttpURLConnection conn = null;
+		try {
+			conn = (HttpURLConnection) url.openConnection();
+		} catch (IOException e) {
+			System.out.println("Error while createing connection with Firebase URL | IOException");
+			e.printStackTrace();
+		} // create connection
+		conn.setUseCaches(false);
+		conn.setDoInput(true);
+		conn.setDoOutput(true);
+		conn.setRequestProperty("Content-Type", "application/json");
+
+		// set my firebase server key
+		conn.setRequestProperty("Authorization", "key="
+				+ "AAAAVdP8m2Q:APA91bEBunCsGlFxxvUpSebrMvCsChSic-hCVKSwRipRB84Whar5gJNafydQc_PQSP6JLfflxeynTJ8zHO2ZJM2M_WZcrZPYIHMYpPgqah7xS7-wpU-ES5iG3RCYnGdkp6X_Eu5VboJ_");
+
+		// create notification message into JSON format
+		JSONObject message = new JSONObject();
+//			message.put("to",
+//					"d5mywEIWuKg:APA91bEnl0jplW5jj6hYZq3pc3rzn_3HVvTiaayDg8m8CGikOxBS1_8LV43Yaz_qh_FwCulIzMYpniFzA-nrIfUKi_h4uCIJIrMshvpfW8d_QUaYgDjVV14wlnVhue2YWcjWkH5Yt6Sb");
+		message.put("to", "/topics/temperature"); // send to pad with topic subscribed to temperature
+		message.put("priority", "high");
+		JSONObject notification = new JSONObject();
+		notification.put("title", id);
+		notification.put("body", txt);
+		message.put("notification", notification);
+
+		// send data to firebase (http method)
+		try {
+			OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
+			out.write(message.toString());
+			out.flush();
+			conn.getInputStream();
+		} catch (IOException e) {
+			System.out.println("Error while writing outputstream to firebase sending to ManageApp | IOException");
 			e.printStackTrace();
 		}
 	}
