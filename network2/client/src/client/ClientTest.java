@@ -2,7 +2,7 @@ package client;
 
 public class ClientTest {
 	
-	public static String CAN_ID = "CAN_1_temperature";
+	String CAN_ID = "CAN_1_temperature";
 	public static void main(String[] args) {
 //		Client client = new Client("192.168.43.1", 8888, "IoT_Client_1");
 //		Client client = new Client("192.168.43.180", 8888, "IoT_Client_1");

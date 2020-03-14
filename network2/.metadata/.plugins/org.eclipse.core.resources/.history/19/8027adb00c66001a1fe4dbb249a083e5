@@ -1,0 +1,19 @@
+package client;
+
+import msg.Msg;
+
+public class SendError extends Thread {
+
+	Sender sender;
+
+	public SendError() {
+		this.sender = Client.sender;
+	}
+
+	@Override
+	public void run() {
+		Msg msg = new Msg(CID, data + "");
+		sender.setMsg(msg);
+		new Thread(sender).start();
+	}
+}

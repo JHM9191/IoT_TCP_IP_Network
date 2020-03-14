@@ -6,16 +6,19 @@
 //import java.io.OutputStream;
 //import java.util.TooManyListenersException;
 //
+//import client.Client;
+//import client.Sender;
 //import gnu.io.CommPort;
 //import gnu.io.CommPortIdentifier;
-//import gnu.io.NoSuchPortException;
 //import gnu.io.PortInUseException;
-//import gnu.io.SerialPort;
-//import gnu.io.SerialPortEvent;
-//import gnu.io.SerialPortEventListener;
 //import gnu.io.UnsupportedCommOperationException;
+//import jssc.SerialPort;
+//import jssc.SerialPortEvent;
+//import jssc.SerialPortEventListener;
+//import msg.Msg;
 //
 //public class SerialConnect implements SerialPortEventListener {
+//
 //	CommPortIdentifier commPortIdentifier;
 //	CommPort commPort;
 //
@@ -89,6 +92,16 @@
 //				}
 //				String ss = new String(readBuffer);
 //				System.out.println("Receive Low Data:" + ss + "||");
+//
+//				// sending error message to pad
+//				String txt = "";
+//				if (ss.equals("")) {
+//					txt = "";
+//				} else if (ss.equals("")) {
+//					txt = "";
+//				}
+//				Client.sender.setMsg(new Msg("", txt, ""));
+//				new Thread(Client.sender).start();
 //			} catch (Exception e) {
 //				e.printStackTrace();
 //			}
@@ -141,18 +154,18 @@
 //
 //	}
 //
-//	public static void main(String[] args) {
-//		SerialConnect serialConnect = null;
-//		String id = "00000000";
-//		String data = "0000000000000055";
-//		String msg = id + data;
-//
-//		try {
-//			serialConnect = new SerialConnect("COM8");
-//			serialConnect.send(msg);
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+////	public static void main(String[] args) {
+////		SerialConnect serialConnect = null;
+////		String id = "00000000";
+////		String data = "0000000000000055";
+////		String msg = id + data;
+////
+////		try {
+////			serialConnect = new SerialConnect("COM8");
+////			serialConnect.send(msg);
+////
+////		} catch (Exception e) {
+////			e.printStackTrace();
+////		}
+////	}
 //}

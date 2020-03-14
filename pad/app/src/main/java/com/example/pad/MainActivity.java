@@ -150,6 +150,23 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
 
                     e.printStackTrace();
+
+                    Log.d(TAG, "client disconnected");
+                    maps.remove(socket.getInetAddress().toString());
+                    ids.remove(socket.getInetAddress().toString());
+                    displayData(new Msg("pad", null, null));
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            setList();
+                        }
+                    });
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            setList();
+                        }
+                    });
                 }
             }
         }
@@ -216,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 Msg msg = (Msg) ois.readObject();
                 Log.d(TAG, "msg.getId() : " + msg.getId());
-//                displayData(msg);
+
                 ids.put(socket.getInetAddress().toString(), msg.getId());
                 Log.d(TAG, "Client ID : " + msg.getId());
             } catch (ClassNotFoundException e) {
@@ -242,6 +259,8 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
 //                    e.printStackTrace();
                     Log.d(TAG, "client disconnected");
+                    maps.remove(socket.getInetAddress().toString());
+                    ids.remove(socket.getInetAddress().toString());
                     displayData(new Msg("pad", null, null));
                     runOnUiThread(new Runnable() {
                         @Override
@@ -264,25 +283,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayData(final Msg msg) {
-
-//        runOnUiThread(new Runnable() {
-////            @Override
-////            public void run() {
-////                Log.d(TAG, "msg.getId() : " + msg.getId());
-////
-////                if (msg.getId().equals("pad")) {
-////                    tvclient.setText("Client disconnected\nWaiting for client\nto reconnect ");
-////                    return;
-////                }
-////                if (msg.getTxt() == null || msg.getTxt().equals("")) {
-////                    tvclient.setText("Client connected\nID: " + msg.getId());
-////                    return;
-////                }
-////
-////                tv.setText(msg.getTxt());
-////            }
-////        });
-
         final String id = msg.getId();
         final String txt = msg.getTxt();
         Log.d("---", listView.getCount() + "");
@@ -323,10 +323,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-
         new SendServer(msg.getId(), msg.getTxt()).start();
-
-
     }
 
 

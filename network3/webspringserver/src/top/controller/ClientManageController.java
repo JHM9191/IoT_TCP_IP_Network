@@ -34,7 +34,7 @@ public class ClientManageController {
 //	           String ServerIp="70.12.113.191";
 //			client = new Client("70.12.224.85", 8888);
 //			client = new Client("15.165.163.102", 8888); // AWS donghyun
-//			client = new Client("192.168.43.2", 8888);
+//			client = new Client("192.168.43.2", 8888); 
 			String serverIp = "15.165.163.102"; // AWS hyunmin
 			client = new Client(serverIp, 8888); // AWS hyunmin
 

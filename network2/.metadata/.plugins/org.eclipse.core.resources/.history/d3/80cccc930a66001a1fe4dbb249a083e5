@@ -1,0 +1,9 @@
+package client;
+
+public class SendError extends Thread {
+
+	public SendError() {
+
+	}
+
+}

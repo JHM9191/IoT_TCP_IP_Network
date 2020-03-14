@@ -10,9 +10,11 @@ public class Client {
 
 	Socket socket;
 	Receiver receiver;
-	Sender sender;
+	public static String CAN_ID;
+	public static Sender sender;
 	boolean flag = true;
 	SendData sendData;
+	
 
 //	static String IP = "192.168.43.1";
 //	static String IP = "192.168.0.12";
@@ -22,6 +24,7 @@ public class Client {
 	}
 
 	public Client(String ip, int port, String CID) {
+		this.CAN_ID = CID;
 		while (flag) {
 			try {
 				socket = new Socket(ip, port);
