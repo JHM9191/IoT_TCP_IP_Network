@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -153,6 +156,39 @@ select, option {
 	function submitForm() {
 		document.getElementById("webapp_form").submit();
 	}
+	function display(result) {
+
+	};
+	function getData() {
+		console.log('hello~');
+		$.ajax({
+			url : 'getIoTClientLoginData.top?',
+			success : function(result) {
+				console.log(result);
+				/* $.each(result, function(idx, data) {
+					console.log(data[idx].id);
+				}); */
+				/* for (var i = 0; i < result.size(); i++) {
+					console.log(result.get(i).toString());
+				}
+				; */
+				console.log(result.getIp());
+				console.log(result.id);
+				display(result);
+			},
+			error : function() {
+			}
+
+		});
+	};
+
+	setInterval(function() {
+		getData();
+	}, 500);
+
+	/* 	$(document).ready(function() {
+	 getData();
+	 }); */
 </script>
 </head>
 <body topmargin="250dp">
@@ -194,7 +230,14 @@ select, option {
 			<div>보내기</div>
 		</div>
 	</form>
+	<table>
+		<c:forEach var="i" items="${loginList }">
+			<tr>
+				<td>${i.ip}</td>
+				<td>${i.id}</td>
 
-
+			</tr>
+		</c:forEach>
+	</table>
 </body>
 </html>

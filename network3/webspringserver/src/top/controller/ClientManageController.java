@@ -5,6 +5,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,16 +13,21 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import msg.Msg;
 import top.model.Client;
+import top.vo.Device;
 
 @Controller
 public class ClientManageController {
 
+	public static ArrayList<Device> loginInfo = new ArrayList<>();
+
 	@RequestMapping("/main.top")
 	public ModelAndView viewMain(ModelAndView mv) {
+
 		mv.setViewName("main");
 		return mv;
 	}
@@ -35,7 +41,8 @@ public class ClientManageController {
 //			client = new Client("70.12.224.85", 8888);
 //			client = new Client("15.165.163.102", 8888); // AWS donghyun
 //			client = new Client("192.168.43.2", 8888); 
-			String serverIp = "15.165.163.102"; // AWS hyunmin
+//			String serverIp = "15.165.163.102"; // AWS hyunmin
+			String serverIp = "192.168.43.2"; // Hotspot hyunmin
 			client = new Client(serverIp, 8888); // AWS hyunmin
 
 //	             client = new Client("70.12.224.85", 8888);
@@ -189,6 +196,59 @@ public class ClientManageController {
 			System.out.println("Error while writing outputstream to firebase sending to ManageApp | IOException");
 			e.printStackTrace();
 		}
+	}
+
+	@RequestMapping("/iotclientloginstatus.top")
+	public void iotclientloginstatus(HttpServletRequest req) {
+		String ip = req.getParameter("ip");
+		String id = req.getParameter("id");
+
+		if (ip != null) {
+			if (id == null | id.equals("")) {
+				for (int i = 0; i < loginInfo.size(); i++) {
+					int cnt = 0;
+					if (ip.equals(loginInfo.get(i).getIp())) {
+						System.out.println(loginInfo.get(i).getId() + "님 로그아웃");
+						loginInfo.remove(i);
+						cnt++;
+						if (cnt == 1)
+							break;
+					} else {
+						System.out.println("No login info found.");
+					}
+				}
+			} else {
+				Device device = new Device();
+				device.setIp(ip);
+				device.setId(id);
+				loginInfo.add(device);
+				System.out.println(id + "님 로그인");
+			}
+		} else {
+
+		}
+		System.out.println("Login List");
+		for (int i = 0; i < loginInfo.size(); i++) {
+			System.out.println("ip : " + loginInfo.get(i).getIp() + " | id : " + loginInfo.get(i).getId());
+//			loginInfo.add(loginInfo.get(i).getId());
+		}
+
+//		strings.add("2");
+//		
+//		mv.addObject("loginInfo", strings);
+//		mv.setViewName("main");
+//		if (loginInfo.size() == 0) {
+//			return null;
+//		}
+	}
+
+	@RequestMapping("/getIoTClientLoginData.top")
+	@ResponseBody
+	public ArrayList<Device> getIoTClientLoginData(HttpServletRequest req, HttpServletResponse res, ModelAndView mv) {
+//		mv.addObject("loginInfo", loginInfo);
+//		mv.setViewName("main");
+		return loginInfo;
+
 	}
 
 }

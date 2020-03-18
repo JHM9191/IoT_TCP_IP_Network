@@ -1,14 +1,19 @@
 package com.example.manageapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,21 +24,28 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
-    String TAG = "===";
 
-    EditText et_ip;
-    RadioGroup radioGroup;
-    RadioButton rb_start, rb_end;
-    String ip;
-    String state;
+    String TAG = "===";
+    public TextView tv_connection_state, tv_speed, tv_temperature, tv_gas;
+
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+//        savedInstanceState.putAll();
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // ActionBar 숨기기
+        getSupportActionBar().hide();
 
-        makeUi();
-
+        makeUI();
         FirebaseMessaging.getInstance().subscribeToTopic("temperature_manage").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -44,42 +56,98 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, msg);
             }
         });
+
+        LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(this);
+        lbm.registerReceiver(receiver, new IntentFilter("filter_string"));
+
     }
 
-    private void makeUi() {
-        et_ip = findViewById(R.id.et_ip);
-        rb_start = findViewById(R.id.rb_start);
-        rb_end = findViewById(R.id.rb_end);
-        radioGroup = findViewById(R.id.rg);
-    }
-
-
-    public void ckbt(View view) {
-        ip = et_ip.getText().toString();
-
-        RadioGroup.OnCheckedChangeListener onCheckedChangeListener = new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.rb_start) {
-                    state = "1";
-                } else if (checkedId == R.id.rb_end) {
-                    state = "0";
+    public BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null) {
+                String control = intent.getStringExtra("control");
+                String data = intent.getStringExtra("data");
+                Log.d(TAG, "control : " + control + " data : " + data);
+                if (control.equals("temperature")) {
+                    tv_temperature.setText(data + " °C");
+                } else if (control.equals("speed")) {
+                    tv_speed.setText(data + " km/h");
+                } else if (control.equals("gas")) {
+                    tv_gas.setText(data + "");
                 }
             }
-        };
-        radioGroup.setOnCheckedChangeListener(onCheckedChangeListener);
+        }
+    };
 
-        Log.d(TAG, "state : " + state);
+    private void makeUI() {
 
-        new SendWebServer(ip, state).start();
+        tv_connection_state = findViewById(R.id.tv_connection_state);
+        tv_speed = findViewById(R.id.tv_speed);
+        tv_temperature = findViewById(R.id.tv_temperature);
+        tv_gas = findViewById(R.id.tv_gas);
 
+
+    }
+
+    public void btck(View v) {
+        switch (v.getId()) {
+            case R.id.btn_engine_on:
+                Toast.makeText(this, "Engine ON", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_engine_off:
+                Toast.makeText(this, "Engine OFF", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_speed_up:
+                Toast.makeText(this, "Speed UP", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_speed_down:
+                Toast.makeText(this, "Speed DOWN", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_cold_1:
+                Toast.makeText(this, "Aircon Level 1", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_cold_2:
+                Toast.makeText(this, "Aircon Level 2", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_cold_3:
+                Toast.makeText(this, "Aircon Level 3", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_cold_4:
+                Toast.makeText(this, "Aircon Level 4", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_cold_5:
+                Toast.makeText(this, "Aircon Level 5", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_cold_off:
+                Toast.makeText(this, "Aircon OFF", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_hot_1:
+                Toast.makeText(this, "Heater Level 1", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_hot_2:
+                Toast.makeText(this, "Heater Level 2", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_hot_3:
+                Toast.makeText(this, "Heater Level 3", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_hot_4:
+                Toast.makeText(this, "Heater Level 4", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_hot_5:
+                Toast.makeText(this, "Heater Level 5", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_hot_off:
+                Toast.makeText(this, "Heater OFF", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     class SendWebServer extends Thread {
 
-//        String urlstr = "http://52.78.108.32:8080/webspringserver/webclient.top"; // AWS donghyun
-        String urlstr = "http://15.165.163.102:8080/webspringserver/webclient.top"; // AWS hyunmin
-//        String urlstr = "http://192.168.43.2:8080/webspringserver/webclient.top";
+        //        String urlstr = "http://52.78.108.32:8080/webspringserver/webclient.top"; // AWS donghyun
+//        String urlstr = "http://15.165.163.102:8080/webspringserver/webclient.top"; // AWS hyunmin
+        String urlstr = "http://192.168.43.2:8080/webspringserver/webclient.top";
 
 
         public SendWebServer(String ip, String state) {
@@ -100,4 +168,24 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+
+//    class GetTemperature extends Thread {
+//        Intent intent = getIntent();
+//
+//
+//        @Override
+//        public void run() {
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    tv_temperature.setText(intent.getStringExtra("temperature").toString());
+//                }
+//            });
+//
+//
+//        }
+//    }
+
+
 }

@@ -148,19 +148,7 @@ public class MainActivity extends AppCompatActivity {
                     });
 
                 } catch (IOException e) {
-
                     e.printStackTrace();
-
-                    Log.d(TAG, "client disconnected");
-                    maps.remove(socket.getInetAddress().toString());
-                    ids.remove(socket.getInetAddress().toString());
-                    displayData(new Msg("pad", null, null));
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            setList();
-                        }
-                    });
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -172,11 +160,38 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    class SendServerLoginStatus extends Thread {
+        String urlstr = "http://192.168.43.2:8080/webspringserver/iotclientloginstatus.top"; // Hotspot hyunmin
+//        String urlstr = "http://52.78.108.32:8888/webspringserver/iotclient.top"; // AWS donghyun
+//        String urlstr = "http://15.165.163.102:8080/webspringserver/iotclient.top"; // AWS hyunmin
+
+        public SendServerLoginStatus(String ip) {
+            urlstr += "?ip=" + ip + "&id=";
+        }
+
+        public SendServerLoginStatus(String ip, String id) {
+            urlstr += "?ip=" + ip + "&id=" + id;
+        }
+
+        @Override
+        public void run() {
+            try {
+                URL url = new URL(urlstr);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.getInputStream();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
     class SendServer extends Thread {
 
-        //        String urlstr = "http://192.168.43.2:8080/webspringserver/iotclient.top";
+        String urlstr = "http://192.168.43.2:8080/webspringserver/iotclient.top"; // Hotspot hyunmin
 //        String urlstr = "http://52.78.108.32:8888/webspringserver/iotclient.top"; // AWS donghyun
-        String urlstr = "http://15.165.163.102:8080/webspringserver/iotclient.top"; // AWS hyunmin
+//        String urlstr = "http://15.165.163.102:8080/webspringserver/iotclient.top"; // AWS hyunmin
 
         public SendServer(String id, String txt) {
             urlstr += "?id=" + id + "&txt=" + txt;
@@ -236,6 +251,7 @@ public class MainActivity extends AppCompatActivity {
 
                 ids.put(socket.getInetAddress().toString(), msg.getId());
                 Log.d(TAG, "Client ID : " + msg.getId());
+                new SendServerLoginStatus(socket.getInetAddress().toString(), msg.getId()).start();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -259,6 +275,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
 //                    e.printStackTrace();
                     Log.d(TAG, "client disconnected");
+                    new SendServerLoginStatus(socket.getInetAddress().toString()).start();
                     maps.remove(socket.getInetAddress().toString());
                     ids.remove(socket.getInetAddress().toString());
                     displayData(new Msg("pad", null, null));
@@ -430,9 +447,9 @@ public class MainActivity extends AppCompatActivity {
 
     //    String sip = "70.12.224.85";
 //    String sip = "70.12.231.236";
-//    String sip = "192.168.43.2";
-//    String sip = "52.78.108.32"; // AWS donghyun
-    String sip = "15.165.163.102"; // AWS hyunmin
+    String sip = "192.168.43.2"; // Hotspot hyunmin
+    //    String sip = "52.78.108.32"; // AWS donghyun
+//    String sip = "15.165.163.102"; // AWS hyunmin
     int sport = 8888;
 
     Socket ssocket;
