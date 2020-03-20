@@ -33,16 +33,17 @@ public class ClientManageController {
 	}
 
 	@RequestMapping("/webclient.top")
-	public void changeState(HttpServletRequest req, HttpServletResponse res) {
+	public void webclient(HttpServletRequest req, HttpServletResponse res) {
 		Client client = null;
 		try {
 //	           client = new Client("70.12.113.191",8888);
 //	           String ServerIp="70.12.113.191";
-//			client = new Client("70.12.224.85", 8888);
+//			client = new Client("70.12.231.236", 8888);
 //			client = new Client("15.165.163.102", 8888); // AWS donghyun
 //			client = new Client("192.168.43.2", 8888); 
 //			String serverIp = "15.165.163.102"; // AWS hyunmin
-			String serverIp = "192.168.43.2"; // Hotspot hyunmin
+			String serverIp = "70.12.231.236"; // hyunmin
+//			String serverIp = "192.168.43.2"; // Hotspot hyunmin
 			client = new Client(serverIp, 8888); // AWS hyunmin
 
 //	             client = new Client("70.12.224.85", 8888);
@@ -52,11 +53,24 @@ public class ClientManageController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		String tid = req.getParameter("ip");
-		String txt = req.getParameter("state");
+		String carId = req.getParameter("carId");
+		String control = req.getParameter("control");
 
-		System.out.println(tid + "--------servletCheck-------" + txt);
-		Msg msg = new Msg("fromservlet", txt, tid);
+//		String ip = "";
+//		for (int i = 0; i < loginInfo.size(); i++) {
+//			if ((loginInfo.get(i).getCarId()).equals(carId)) {
+//				for (int j = 0; j < loginInfo.size(); j++) {
+//					if ((loginInfo.get(j).getId()).equals(control)) {
+//					ip = loginInfo.get(j).getIp();	
+//					}
+//				}
+//			}
+//		}
+		String message = req.getParameter("message");
+
+		System.out.println("================webclient.top=================");
+		System.out.println(carId + " | " + message + " | " + control);
+		Msg msg = new Msg(carId, message, control);
 		client.startClient(msg);
 
 		try {
@@ -71,7 +85,9 @@ public class ClientManageController {
 	public void sendNotiFromIoTClient(HttpServletRequest req, HttpServletResponse res) {
 		String id = req.getParameter("id");
 		String txt = req.getParameter("txt");
-		System.out.println(id + " " + txt);
+		String carId = req.getParameter("carId");
+
+		System.out.println(id + " " + txt + " " + carId);
 		if (txt == null | txt.equals("null")) {
 			System.out.println("txt == null | txt.equals(\"null\")");
 			System.out.println("Pad connected");
@@ -80,7 +96,7 @@ public class ClientManageController {
 
 		// send notification to pad only when data is in some conditions
 		int val = Integer.parseInt(txt);
-		if (val >= 90) { // if data is greater than 90, send 1 to pad
+		if (val < 77777 && val >= 90) { // if data is greater than 90, send 1 to pad
 			val = 1;
 			try {
 				res.sendRedirect("sendnotitopad.top?id=" + id + "&txt=" + val);
@@ -129,9 +145,27 @@ public class ClientManageController {
 		message.put("to", "/topics/temperature_manage");
 		message.put("priority", "high");
 		JSONObject notification = new JSONObject();
-		notification.put("title", id);
-		notification.put("body", txt);
+		notification.put("title", carId);
+		notification.put("body", id);
 		message.put("notification", notification);
+		JSONObject data = new JSONObject();
+		data.put("control", id);
+		data.put("data", txt);
+		message.put("data", data);
+
+//		{
+//			  "message":{
+//			    "token":"bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
+//			    "notification":{
+//			      "title":"Portugal vs. Denmark",
+//			      "body":"great match!"
+//			    },
+//			    "data" : {
+//			      "Nick" : "Mario",
+//			      "Room" : "PortugalVSDenmark"
+//			    }
+//			  }
+//			}
 
 		// send data to firebase (http method)
 		try {
@@ -199,9 +233,10 @@ public class ClientManageController {
 	}
 
 	@RequestMapping("/iotclientloginstatus.top")
-	public void iotclientloginstatus(HttpServletRequest req) {
+	public void iotclientloginstatus(HttpServletRequest req, HttpServletResponse res) {
 		String ip = req.getParameter("ip");
 		String id = req.getParameter("id");
+		String carId = req.getParameter("carId");
 
 		if (ip != null) {
 			if (id == null | id.equals("")) {
@@ -209,6 +244,12 @@ public class ClientManageController {
 					int cnt = 0;
 					if (ip.equals(loginInfo.get(i).getIp())) {
 						System.out.println(loginInfo.get(i).getId() + "님 로그아웃");
+						try {
+							res.sendRedirect(
+									"iotclient.top?id=" + loginInfo.get(i).getId() + "&txt=88888&carId=" + carId);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 						loginInfo.remove(i);
 						cnt++;
 						if (cnt == 1)
@@ -221,15 +262,22 @@ public class ClientManageController {
 				Device device = new Device();
 				device.setIp(ip);
 				device.setId(id);
+				device.setCarId(carId);
 				loginInfo.add(device);
 				System.out.println(id + "님 로그인");
+				try {
+					res.sendRedirect("iotclient.top?id=" + id + "&txt=77777&carId=" + carId);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		} else {
 
 		}
 		System.out.println("Login List");
 		for (int i = 0; i < loginInfo.size(); i++) {
-			System.out.println("ip : " + loginInfo.get(i).getIp() + " | id : " + loginInfo.get(i).getId());
+			System.out.println("ip : " + loginInfo.get(i).getIp() + " | id : " + loginInfo.get(i).getId()
+					+ " | carId : " + loginInfo.get(i).getCarId());
 //			loginInfo.add(loginInfo.get(i).getId());
 		}
 
@@ -249,6 +297,45 @@ public class ClientManageController {
 //		mv.setViewName("main");
 		return loginInfo;
 
+	}
+
+	@RequestMapping("/checkCarState.top")
+	public void checkCarState(HttpServletRequest req, HttpServletResponse res) {
+		String id = req.getParameter("control");
+		String carId = req.getParameter("carId");
+		String txt = "88888";
+
+//		for (int i = 0; i < loginInfo.size(); i++) {
+//			if ((loginInfo.get(i).getCarId()).equals(carId)) {
+//				for (int j = 0; j < loginInfo.size(); j++) {
+//					if ((loginInfo.get(j).getId()).equals(id)) {
+//						txt = "77777";
+//						if (j == 0) {
+//							try {
+//								res.sendRedirect("iotclient.top?id=" + "login" + "&txt=" + (j + 1) + "&carId=" + carId);
+//							} catch (IOException e) {
+//								e.printStackTrace();
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
+
+		System.out.println("checkCarState() : " + id + " " + carId + " " + txt);
+
+		try {
+			res.sendRedirect("iotclient.top?id=" + id + "&txt=" + txt + "&carId=" + carId);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@RequestMapping("/checkServerConnection.top")
+	public void checkServerConnection(HttpServletRequest req) {
+		String managerId = req.getParameter("managerId");
+		System.out.println("managerId : " + managerId);
 	}
 
 }

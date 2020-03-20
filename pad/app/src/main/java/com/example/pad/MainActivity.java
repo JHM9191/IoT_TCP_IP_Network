@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     ServerReadyThread serverReadyThread;
     public static HashMap<String, ObjectOutputStream> maps;
     public static HashMap<String, String> ids;
+    public static HashMap<String, String> cars;
 
     // ServerReadyThread variables
     boolean aflag = true;
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         maps = new HashMap<>();
         ids = new HashMap<>();
+        cars = new HashMap<>();
 
         makeUi();
 
@@ -161,16 +163,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class SendServerLoginStatus extends Thread {
-        String urlstr = "http://192.168.43.2:8080/webspringserver/iotclientloginstatus.top"; // Hotspot hyunmin
+//        String urlstr = "http://192.168.43.2:8080/webspringserver/iotclientloginstatus.top"; // Hotspot hyunmin
+        String urlstr = "http://70.12.231.236:8080/webspringserver/iotclientloginstatus.top"; // Hotspot hyunmin
 //        String urlstr = "http://52.78.108.32:8888/webspringserver/iotclient.top"; // AWS donghyun
 //        String urlstr = "http://15.165.163.102:8080/webspringserver/iotclient.top"; // AWS hyunmin
 
-        public SendServerLoginStatus(String ip) {
-            urlstr += "?ip=" + ip + "&id=";
+        public SendServerLoginStatus(String ip, String carId) {
+            urlstr += "?ip=" + ip + "&carId=" + carId + "&id=";
         }
 
-        public SendServerLoginStatus(String ip, String id) {
-            urlstr += "?ip=" + ip + "&id=" + id;
+        public SendServerLoginStatus(String ip, String carId, String id) {
+            urlstr += "?ip=" + ip + "&carId=" + carId + "&id=" + id;
         }
 
         @Override
@@ -189,12 +192,13 @@ public class MainActivity extends AppCompatActivity {
 
     class SendServer extends Thread {
 
-        String urlstr = "http://192.168.43.2:8080/webspringserver/iotclient.top"; // Hotspot hyunmin
+        String urlstr = "http://70.12.231.236:8080/webspringserver/iotclient.top"; // Hotspot hyunmin
+//        String urlstr = "http://192.168.43.2:8080/webspringserver/iotclient.top"; // Hotspot hyunmin
 //        String urlstr = "http://52.78.108.32:8888/webspringserver/iotclient.top"; // AWS donghyun
 //        String urlstr = "http://15.165.163.102:8080/webspringserver/iotclient.top"; // AWS hyunmin
 
-        public SendServer(String id, String txt) {
-            urlstr += "?id=" + id + "&txt=" + txt;
+        public SendServer(String id, String txt, String carId) {
+            urlstr += "?id=" + id + "&txt=" + txt + "&carId=" + carId;
         }
 
         @Override
@@ -250,8 +254,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "msg.getId() : " + msg.getId());
 
                 ids.put(socket.getInetAddress().toString(), msg.getId());
+                cars.put(socket.getInetAddress().toString(), msg.getTid());
+
                 Log.d(TAG, "Client ID : " + msg.getId());
-                new SendServerLoginStatus(socket.getInetAddress().toString(), msg.getId()).start();
+                new SendServerLoginStatus(socket.getInetAddress().toString(), msg.getTid(), msg.getId()).start();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -275,9 +281,11 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
 //                    e.printStackTrace();
                     Log.d(TAG, "client disconnected");
-                    new SendServerLoginStatus(socket.getInetAddress().toString()).start();
+                    String carId = cars.get(socket.getInetAddress().toString());
+                    new SendServerLoginStatus(socket.getInetAddress().toString(), carId).start();
                     maps.remove(socket.getInetAddress().toString());
                     ids.remove(socket.getInetAddress().toString());
+                    cars.remove(socket.getInetAddress().toString());
                     displayData(new Msg("pad", null, null));
                     runOnUiThread(new Runnable() {
                         @Override
@@ -340,14 +348,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        new SendServer(msg.getId(), msg.getTxt()).start();
+        new SendServer(msg.getId(), msg.getTxt(), msg.getTid()).start();
     }
 
 
     public void sendMsg(Msg msg) {
-        String tid = msg.getTid();
+        String carId = msg.getId();
 
-        if (tid == null || tid.equals("")) {
+        if (carId == null || carId.equals("")) {
             Sender sender =
                     new Sender(msg);
             sender.start();
@@ -363,6 +371,7 @@ public class MainActivity extends AppCompatActivity {
         Msg msg;
 
         public Sender(Msg msg) {
+            Log.d(TAG, "entered Sender");
             this.msg = msg;
         }
 
@@ -386,28 +395,30 @@ public class MainActivity extends AppCompatActivity {
         Msg msg;
 
         public Sender2(Msg msg) {
+            Log.d(TAG, "entered Sender2");
             this.msg = msg;
         }
 
         @Override
         public void run() {
-            String tid = msg.getTid();
+            String id = msg.getId();
             try {
-                Collection<String> col = ids.keySet();
+                Collection<String> col = cars.keySet();
                 Iterator<String> it = col.iterator();
                 String sip = "";
                 while (it.hasNext()) {
                     String key = it.next();
-                    if (ids.get(key).equals(tid)) {
+                    if (cars.get(key).equals(id)) {
                         sip = key;
                         Log.d("===", "key : " + key);
+                        Log.d(TAG, sip);
+                        maps.get(sip).writeObject(msg);
                     }
                 }
-                Log.d("===", "sip : " + sip);
                 if (!sip.equals("")) {
                     maps.get(sip).writeObject(msg);
                 } else {
-                    maps.get(tid).writeObject(msg);
+//                    maps.get(tid).writeObject(msg);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -446,8 +457,8 @@ public class MainActivity extends AppCompatActivity {
     //    String sip = "70.12.113.219";
 
     //    String sip = "70.12.224.85";
-//    String sip = "70.12.231.236";
-    String sip = "192.168.43.2"; // Hotspot hyunmin
+    String sip = "70.12.231.236";
+//    String sip = "192.168.43.2"; // Hotspot hyunmin
     //    String sip = "52.78.108.32"; // AWS donghyun
 //    String sip = "15.165.163.102"; // AWS hyunmin
     int sport = 8888;
@@ -578,7 +589,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Msg msg = new Msg("tab_JHM", "tab_JHM_connected", null);
+            Msg msg = new Msg("pad_Car1", "tab_JHM_connected", null);
             try {
                 oos.writeObject(msg);
             } catch (IOException e) {
@@ -594,7 +605,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // 서버가 꺼지면 여기서 exception 발생 //
                     msg = (Msg) ois.readObject();
-
+                    Log.d(TAG, msg.getId() + " | " + msg.getTxt() + " | " + msg.getTid());
                     publishProgress(msg);
 
                 } catch (Exception e) {
@@ -626,14 +637,21 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }// socket closed //
             // 재접속하기위해 함수 호출  //
-            String ip = values[0].getId();
-            String tid = values[0].getTid();
-            String state = values[0].getTxt();
-            Log.d("===", "ip : " + ip + ", state : " + state + ", tid : " + tid);
-//            if (state != null || !state.equals("")) {
-            status.setText(state);
-//            }
-            Msg msg = new Msg("server", state, tid);
+//            String ip = values[0].getId();
+//            String tid = values[0].getTid();
+//            String state = values[0].getTxt();
+//            Log.d("===", "ip : " + ip + ", state : " + state + ", tid : " + tid);
+////            if (state != null || !state.equals("")) {
+//            status.setText(state);
+////            }
+//            Msg msg = new Msg("server", state, tid);
+
+            String carId = values[0].getId();
+            String message = values[0].getTxt();
+            String control = values[0].getTid();
+
+
+            Msg msg = new Msg(carId, message, control);
             sendMsg(msg);
 
 

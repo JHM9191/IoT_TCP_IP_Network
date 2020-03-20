@@ -11,6 +11,7 @@ public class Client {
 	Socket socket;
 	Receiver receiver;
 	public static String CAN_ID;
+	public static String CAR_ID;
 	public static Sender sender;
 	boolean flag = true;
 	SendData sendData;
@@ -23,8 +24,9 @@ public class Client {
 	public Client() {
 	}
 
-	public Client(String ip, int port, String CID) {
+	public Client(String ip, int port, String CID, String CAR_ID) {
 		this.CAN_ID = CID;
+		this.CAR_ID = CAR_ID;
 		while (flag) {
 			try {
 				socket = new Socket(ip, port);
@@ -49,7 +51,7 @@ public class Client {
 		System.out.println("Server ip : " + ip);
 		System.out.println("Server port : " + port);
 		sender = new Sender(socket); // Sender class is runnable implemented class.
-		Msg msg = new Msg(CID, null, null); // This is for client id to be displayed in the listview of
+		Msg msg = new Msg(CID, null, CAR_ID); // This is for client id to be displayed in the listview of
 											// tabserver.
 		sender.setMsg(msg);
 		sender.setIp(ip);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
@@ -46,7 +47,7 @@
                 android:layout_height="wrap_content" />
 
             <Spinner
-                android:id="@+id/sp_car"
+                android:id="@+id/spinner_cars"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:backgroundTint="#36FF00"
@@ -61,16 +62,37 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView7"
+        <LinearLayout
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:text="시동"
-            android:textAlignment="center"
-            android:textColor="@android:color/background_light"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_name_engine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="시동"
+                android:textAlignment="center"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/pb_engine"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/iv_engine"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:srcCompat="@drawable/check" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_engine_on"
@@ -100,16 +122,37 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView8"
+        <LinearLayout
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="속도"
-            android:textAlignment="center"
-            android:textColor="@android:color/background_light"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_name_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="속도"
+                android:textAlignment="center"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/pb_speed"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/iv_speed"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:srcCompat="@drawable/check" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -138,7 +181,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#232323"
-                    android:text="0 km/h"
+                    android:text="0 Km/h"
                     android:textAlignment="center"
                     android:textColor="@android:color/holo_green_light"
                     android:textSize="30sp" />
@@ -161,16 +204,37 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView10"
+        <LinearLayout
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="온도"
-            android:textAlignment="center"
-            android:textColor="@android:color/background_light"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_name_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="온도"
+                android:textAlignment="center"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/pb_temp"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/iv_temp"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:srcCompat="@drawable/check" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -377,19 +441,40 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
+        <LinearLayout
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:text="배기 \n가스량"
-            android:textAlignment="center"
-            android:textColor="@android:color/background_light"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_name_gas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="배기 \n가스량"
+                android:textAlignment="center"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/pb_gas"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/iv_gas"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:srcCompat="@drawable/check" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:padding="5dp">
 

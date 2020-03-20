@@ -36,7 +36,7 @@ public class SendData implements Runnable {
 			System.out.println("Sending random number");
 			Random r = new Random();
 			int data = r.nextInt(100);
-			Msg msg = new Msg(CID, data + "");
+			Msg msg = new Msg(CID, data + "", "car1");
 			sender.setMsg(msg);
 			new Thread(sender).start();
 		}

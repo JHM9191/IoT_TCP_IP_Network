@@ -1,14 +1,10 @@
 package com.example.manageapp;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -24,7 +20,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     String TAG = "===";
 
-    String msg, title;
+    String carId, control, data;
 
     NotificationManagerCompat notificationManager;
 
@@ -33,19 +29,23 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
 
 
-        title = remoteMessage.getNotification().getTitle();
-        msg = remoteMessage.getNotification().getBody();
+        carId = remoteMessage.getNotification().getTitle();
+//        msg = remoteMessage.getNotification().getBody();
 
-//        Log.d(TAG, "title : " + title + " msg : " + msg);
+        control = remoteMessage.getData().get("control");
+        data = remoteMessage.getData().get("data");
+
+        Log.d(TAG, "carId : " + carId + " | control : " + control + " | data : " + data);
 
 
         Intent intent = new Intent("filter_string");
         // put your all data using put extra
-        intent.putExtra("control", title);
-        intent.putExtra("data", msg);
+
+        intent.putExtra("carId", carId);
+        intent.putExtra("control", control);
+        intent.putExtra("data", data);
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-
 
 
 //        String channelId = "channel";

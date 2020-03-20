@@ -132,13 +132,9 @@ public class Client {
 
 	public void startClient(Msg FromServeletMsg) {
 		Msg msg = FromServeletMsg;
-		System.out.println("send msg" + msg.getId() + msg.getTxt());
+		System.out.println("Sending msg to pad : " + msg.getId() + " | " + msg.getTxt() + " | " + msg.getTid());
 		sender.setMsg(msg);
 		new Thread(sender).start();
-	}
-
-	public static void main(String[] args) {
-
 	}
 
 }

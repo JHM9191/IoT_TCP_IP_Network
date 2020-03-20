@@ -2,4 +2,13 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="client.Sender"/>
     <fullyQualifiedTypeName name="client.Client"/>
+    <fullyQualifiedTypeName name="eu.hansolo.tilesfx.chart.RadarChart"/>
+    <fullyQualifiedTypeName name="com.sun.org.apache.bcel.internal.classfile.Node"/>
+    <fullyQualifiedTypeName name="com.sun.org.apache.xerces.internal.util.Status"/>
+    <fullyQualifiedTypeName name="java.time.Duration"/>
+    <fullyQualifiedTypeName name="com.sun.org.apache.xml.internal.security.keys.content.KeyValue"/>
+    <fullyQualifiedTypeName name="com.sun.tools.example.debug.tty.EventHandler"/>
+    <fullyQualifiedTypeName name="java.util.ResourceBundle.Control"/>
+    <fullyQualifiedTypeName name="com.sun.org.apache.xerces.internal.impl.xpath.XPath.Axis"/>
+    <fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
 </qualifiedTypeNameHistroy>

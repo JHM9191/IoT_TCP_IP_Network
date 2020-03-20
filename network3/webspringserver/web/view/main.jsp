@@ -198,22 +198,23 @@ select, option {
 			<table>
 				<tr>
 					<th>IP 주소</th>
-					<td colspan="2"><select name="ip" required="required"
+					<td colspan="2"><select name="carId" required="required"
 						autofocus="autofocus"
 						style="width: 450px; height: 40px; font-size: 20px;">
 							<option value="">ALL</option>
-							<option value="/70.12.231.236">IoT_Client_1(/70.12.231.236)</option>
-							<option value="/70.12.113.199">hyunchu(/70.12.113.199)</option>
+							<option value="car1">car1</option>
+							<!-- <option value="/70.12.113.199">hyunchu(/70.12.113.199)</option>
 							<option value="/70.12.227.235">jmj(/70.12.227.235)</option>
-							<option value="/70.12.113.191">hennie(/70.12.113.191)</option>
+							<option value="/70.12.113.191">hennie(/70.12.113.191)</option> -->
 
 					</select></td>
 				</tr>
 				<tr>
 					<th>상태</th>
-					<td align="center"><input type="radio" name="state" value="1"
-						checked="checked" required="required">start</td>
-					<td align="center"><input type="radio" name="state" value="0">stop</td>
+					<td align="center"><input type="radio" name="message"
+						value="1" checked="checked" required="required">start</td>
+					<td align="center"><input type="radio" name="message"
+						value="0">stop</td>
 
 				</tr>
 				<!-- <tr>
@@ -229,6 +230,7 @@ select, option {
 			<div>보내기</div>
 			<div>보내기</div>
 		</div>
+		<input type="hidden" name="control" value="engine" />
 	</form>
 	<table>
 		<c:forEach var="i" items="${loginList }">

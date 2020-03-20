@@ -15,6 +15,7 @@ public class Receiver extends Thread {
 	String IP;
 	int PORT;
 	String CID;
+	String CAR_ID;
 
 	SendData sendData;
 
@@ -43,6 +44,7 @@ public class Receiver extends Thread {
 	public void setSender(Sender sender) {
 		this.sender = sender;
 		CID = sender.getMsg().getId();
+		CAR_ID = sender.getMsg().getTid();
 		sendData = new SendData(sender);
 		new Thread(sendData).start();
 	}
@@ -66,14 +68,12 @@ public class Receiver extends Thread {
 				System.out.println("From tabserver : " + msg.getTxt());
 				System.out.println("From tabserver : " + msg.getTid());
 
-				System.out.println(msg.getTxt() + "1");
-				System.out.println(msg.getTid());
 
 				if (msg.getTid() == null | msg.getTid().equals("") | msg.getTid().equals("null")) {
 					if (msg.getTxt().equals("1")) {
 						sendData.setFlag(true);
 						new Thread(sendData).start();
-					} else if (msg.getTxt().equals("0")) {
+					} else if (msg.getTxt().equals("2")) {
 						sendData.setFlag(false);
 					}
 				} 
@@ -106,7 +106,7 @@ public class Receiver extends Thread {
 						System.out.println("catch() IP : " + IP);
 						System.out.println("catch() PORT : " + PORT);
 						System.out.println("catch() CID : " + CID);
-						new Client(IP, PORT, CID);
+						new Client(IP, PORT, CID, CAR_ID);
 						break;
 					} catch (IOException e1) {
 						System.out.println("Receiver run() catch() while(true) catch()");

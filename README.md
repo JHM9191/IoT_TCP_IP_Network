@@ -176,3 +176,38 @@ IoT TCP/IP Network(작성중)
 
 
 
+
+
+
+
+
+
+# 5. 제어메세지 규칙
+
+Msg(String id, String txt, String tid)
+
+id => control
+
+txt => message
+
+tid => carId
+
+| txt  |   id   | tid  |      설명      |
+| :--: | :----: | :--: | :------------: |
+|  1   | engine | car1 |  Engine start  |
+|  0   | engine | car1 |  Engine stop   |
+|  1   | speed  | car1 |    Speed up    |
+|  0   | speed  | car1 |   Speed down   |
+|  0   |  cold  | car1 |   Aircon off   |
+|  1   |  cold  | car1 | Aircon level 1 |
+|  2   |  cold  | car1 | Aircon level 2 |
+|  3   |  cold  | car1 | Aircon level 3 |
+|  4   |  cold  | car1 | Aircon level 4 |
+|  5   |  cold  | car1 | Aircon level 5 |
+|  0   |  hot   | car1 |   heater off   |
+|  1   |  hot   | car1 | Heater level 1 |
+|  2   |  hot   | car1 | Heater level 2 |
+|  3   |  hot   | car1 | Heater level 3 |
+|  4   |  hot   | car1 | Heater level 4 |
+|  5   |  hot   | car1 | Heater level 5 |
+
