@@ -69,8 +69,8 @@ public class ClientManageController {
 		String message = req.getParameter("message");
 
 		System.out.println("================webclient.top=================");
-		System.out.println(carId + " | " + message + " | " + control);
-		Msg msg = new Msg(carId, message, control);
+		System.out.println(control + " | " + message + " | " + carId);
+		Msg msg = new Msg(control, message, carId);
 		client.startClient(msg);
 
 		try {
@@ -87,6 +87,7 @@ public class ClientManageController {
 		String txt = req.getParameter("txt");
 		String carId = req.getParameter("carId");
 
+		System.out.println("========iotclient.top========");
 		System.out.println(id + " " + txt + " " + carId);
 		if (txt == null | txt.equals("null")) {
 			System.out.println("txt == null | txt.equals(\"null\")");
@@ -95,23 +96,34 @@ public class ClientManageController {
 		}
 
 		// send notification to pad only when data is in some conditions
-		int val = Integer.parseInt(txt);
-		if (val < 77777 && val >= 90) { // if data is greater than 90, send 1 to pad
-			val = 1;
-			try {
-				res.sendRedirect("sendnotitopad.top?id=" + id + "&txt=" + val);
-			} catch (IOException e) {
-				System.out.println("Error while redirecting to sendnotitopad.top when val >=90 | IOException");
-				e.printStackTrace();
+		int txt_num = Integer.parseInt(txt);
+		String server_msg = "";
+		switch (id) {
+		case "speed":
+			if (txt_num >= 90 && txt_num < 100) {
+				server_msg = "Caution";
+			} else if (txt_num >= 100) {
+				server_msg = "Dangerous!";
 			}
-		} else if (val <= 20) { // if data is less than 20, send 0 to pad
-			val = 0;
-			try {
-				res.sendRedirect("sendnotitopad.top?id=" + id + "&txt=" + val);
-			} catch (IOException e) {
-				System.out.println("Error while redirecting to sendnotitopad.top when val <=20 | IOException");
-				e.printStackTrace();
+
+			break;
+		case "temperature":
+			if (txt_num >= 30 && txt_num < 40) {
+				server_msg = "Temperature is above 30.";
+			} else if (txt_num >= 20 && txt_num < 30) {
+				server_msg = "Temperature is above 40.";
+			} else if (txt_num <= 10 && txt_num > 0) {
+				server_msg = "Temperature is below 10.";
 			}
+			break;
+		case "gas":
+			server_msg = "Normal";
+			break;
+		}
+		try {
+			res.sendRedirect("sendnotitopad.top?control=" + id + "&message=" + server_msg + "&data=" + txt);
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 
 		// send notification to manageApp regardless of the said conditions above
@@ -146,11 +158,11 @@ public class ClientManageController {
 		message.put("priority", "high");
 		JSONObject notification = new JSONObject();
 		notification.put("title", carId);
-		notification.put("body", id);
+		notification.put("body", server_msg);
 		message.put("notification", notification);
 		JSONObject data = new JSONObject();
 		data.put("control", id);
-		data.put("data", txt);
+		data.put("data", txt_num);
 		message.put("data", data);
 
 //		{
@@ -182,8 +194,9 @@ public class ClientManageController {
 
 	@RequestMapping("/sendnotitopad.top")
 	public void sendNotiFromManager(HttpServletRequest req) {
-		String id = req.getParameter("id");
-		String txt = req.getParameter("txt");
+		String id = req.getParameter("control");
+		String server_messasge = req.getParameter("message");
+		String val = req.getParameter("data");
 
 		// send notification to pad
 		URL url = null;
@@ -217,8 +230,12 @@ public class ClientManageController {
 		message.put("priority", "high");
 		JSONObject notification = new JSONObject();
 		notification.put("title", id);
-		notification.put("body", txt);
+		notification.put("body", server_messasge);
 		message.put("notification", notification);
+		JSONObject data = new JSONObject();
+		data.put("control", id);
+		data.put("data", val);
+		message.put("data", data);
 
 		// send data to firebase (http method)
 		try {
@@ -305,11 +322,11 @@ public class ClientManageController {
 		String carId = req.getParameter("carId");
 		String txt = "88888";
 
-//		for (int i = 0; i < loginInfo.size(); i++) {
-//			if ((loginInfo.get(i).getCarId()).equals(carId)) {
-//				for (int j = 0; j < loginInfo.size(); j++) {
-//					if ((loginInfo.get(j).getId()).equals(id)) {
-//						txt = "77777";
+		for (int i = 0; i < loginInfo.size(); i++) {
+			if ((loginInfo.get(i).getCarId()).equals(carId)) {
+				for (int j = 0; j < loginInfo.size(); j++) {
+					if ((loginInfo.get(j).getId()).equals(id)) {
+						txt = "77777";
 //						if (j == 0) {
 //							try {
 //								res.sendRedirect("iotclient.top?id=" + "login" + "&txt=" + (j + 1) + "&carId=" + carId);
@@ -317,10 +334,10 @@ public class ClientManageController {
 //								e.printStackTrace();
 //							}
 //						}
-//					}
-//				}
-//			}
-//		}
+					}
+				}
+			}
+		}
 
 		System.out.println("checkCarState() : " + id + " " + carId + " " + txt);
 

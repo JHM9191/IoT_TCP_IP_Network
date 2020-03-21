@@ -19,7 +19,7 @@
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Smart Car"
+            android:text="Smart Car Manager"
             android:textAlignment="center"
             android:textColor="@android:color/holo_green_light"
             android:textSize="36sp"
@@ -491,7 +491,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#232323"
-                android:text="0"
+                android:text="0 ppm"
                 android:textAlignment="center"
                 android:textColor="@android:color/holo_green_light"
                 android:textSize="30sp" />

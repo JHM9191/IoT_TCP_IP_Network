@@ -5,7 +5,70 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2020-03-19T11:00:00Z</updated>
+  <updated>2020-03-20T17:39:56Z</updated>
+  <entry>
+    <title>Spring Cloud Data Flow 2.5.0.M1 Released</title>
+    <link rel="alternate" href="https://spring.io/blog/2020/03/20/spring-cloud-data-flow-2-5-0-m1-released" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Ilayaperumal Gopinathan</name>
+    </author>
+    <id>tag:spring.io,2020-03-20:4004</id>
+    <updated>2020-03-20T17:39:56Z</updated>
+    <content type="html">&lt;p&gt;Spring Cloud Data Flow team is pleased to announce the first milestone release of 2.5.0.M1.&lt;/p&gt;
+&lt;p&gt;The first milestone release of 2.5.0 consists of performance improvements addressed at application status retrieval for streams in Cloud Foundry. This also involves revamping the runtime application view page along with better pagination for streams at the SCDF dashboard. You can see more information on these improvements on the recently released SCDF &lt;a href="https://spring.io/blog/2020/03/11/spring-cloud-data-flow-2-4-2-ga-released"&gt;2.4.2 GA&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This milestone release also consists of some important bug fixes mentioned in &lt;a href="https://github.com/spring-cloud/spring-cloud-dataflow/releases/tag/v2.5.0.M1"&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Please note that Spring Cloud Data Flow 2.5.x is compatible only with the Spring Cloud Skipper 2.3.2.RELEASE and above. When upgrading Spring Cloud Data Flow 2.5.0.M1, Spring Cloud Skipper also needs to be updated to 2.3.2.RELEASE and above. The current milestone on Spring Cloud Skipper release is 2.4.0.M1.&lt;/p&gt;
+&lt;p&gt;What’s coming next:&lt;/p&gt;
+&lt;p&gt;We are working on a feature to support application &lt;code&gt;metadata&lt;/code&gt; as part of the &lt;code&gt;Docker&lt;/code&gt; images. Currently, we support application whitelisting only via maven artifact. With this new feature, one can configure the application metadata when creating the docker image. &lt;/p&gt;
+&lt;p&gt;Support for &lt;code&gt;Azure AD&lt;/code&gt; as an identity provider is in the works.&lt;/p&gt;&lt;h2&gt;&lt;a href="#stay-in-touch-hellip" class="anchor" name="stay-in-touch-hellip"&gt;&lt;/a&gt;Stay in touch&amp;hellip;&lt;/h2&gt;
+&lt;p&gt;As always, we welcome feedback and contributions, so please reach out to us on &lt;a href="https://stackoverflow.com/questions/tagged/spring-cloud-dataflow"&gt;Stackoverflow&lt;/a&gt; or &lt;a href="https://github.com/spring-cloud/spring-cloud-dataflow/issues"&gt;GitHub&lt;/a&gt; or via &lt;a href="https://gitter.im/spring-cloud/spring-cloud-dataflow"&gt;Gitter&lt;/a&gt;.&lt;/p&gt;
+&lt;!-- rendered by Sagan Renderer Service --&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Tools 4.6.0 released</title>
+    <link rel="alternate" href="https://spring.io/blog/2020/03/20/spring-tools-4-6-0-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Martin Lippert</name>
+    </author>
+    <id>tag:spring.io,2020-03-20:4003</id>
+    <updated>2020-03-20T15:12:30Z</updated>
+    <content type="html">&lt;p&gt;Dear Spring Community,&lt;/p&gt;
+&lt;p&gt;I am happy to announce the 4.6.0 release of the Spring Tools 4 for Eclipse, Visual Studio Code, and Theia.&lt;/p&gt;
+&lt;p&gt;Highlights from this release include:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;(Spring Boot)&lt;/em&gt; performance: improved performance while scanning projects for symbols&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;(Spring Boot)&lt;/em&gt; performance: improved performance when multiple files change at once (e.g. after a switch to a different branch or a git pull + refresh)&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;(Eclipse)&lt;/em&gt; bugfix: source lookup for Spring Boot launch configs works again&lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;(Eclipse)&lt;/em&gt; documentation: There is a new section in the user documentation that focuses on migrating an existing workspace from Spring Tool Suite 3 to Spring Tools 4: &lt;a href="https://github.com/spring-projects/sts4/wiki/STS3-Migration"&gt;https://github.com/spring-projects/sts4/wiki/STS3-Migration&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To download the distribution for Eclipse and find links to the marketplace entries for Visual Studio Code and Theia, please go visit:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Spring Tools 4: &lt;a href="https://spring.io/tools/"&gt;https://spring.io/tools/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Detailed changes can be found here: &lt;a href="https://github.com/spring-projects/sts4/wiki/Changelog#2020-03-19-460-release"&gt;https://github.com/spring-projects/sts4/wiki/Changelog#2020-03-19-460-release&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Spring Tools 4.6.1 is scheduled to be released in late April 2020.&lt;/p&gt;
+&lt;p&gt;Enjoy!&lt;/p&gt;
+&lt;!-- rendered by Sagan Renderer Service --&gt;</content>
+  </entry>
+  <entry>
+    <title>A Bootiful Podcast: The Smile Inducing and Brilliant Glenn Renfro</title>
+    <link rel="alternate" href="https://spring.io/blog/2020/03/20/a-bootiful-podcast-the-smile-inducing-and-brilliant-glenn-renfro" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Josh Long</name>
+    </author>
+    <id>tag:spring.io,2020-03-20:4002</id>
+    <updated>2020-03-20T06:30:39Z</updated>
+    <content type="html">&lt;p&gt;Hi, Spring fans! In this installment, Josh Long (@starbuxman) talks to the inimitable, smile-inducing and hope-renewing Glenn Renfro about Spring Cloud Data Flow, Spring Cloud Task and so much more.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://connect.tanzu.vmware.com/Spring_Live.html"&gt;Spring Live&lt;/a&gt; and click &amp;ldquo;Join this Session&amp;rdquo;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="http://twitter.com/cppwfs"&gt;Glenn Renfro (@cppwfs)&lt;/a&gt; on Twitter&lt;/li&gt;
+&lt;/ul&gt;
+&lt;iframe title="The Smile-Inducing and Brilliant Glenn Renfro" src="https://www.podbean.com/media/player/3n25g-d6b0f6?from=usersite&amp;vjs=1&amp;skin=1&amp;fonts=Helvetica&amp;auto=0&amp;download=1" height="315" width="100%" style="border: none;" scrolling="no" data-name="pb-iframe-player"&gt;&lt;/iframe&gt;
+&lt;!-- rendered by Sagan Renderer Service --&gt;</content>
+  </entry>
   <entry>
     <title>Register Now for Spring Live, an interactive, virtual, 24-hour long conference for you, Spring fans!</title>
     <link rel="alternate" href="https://spring.io/blog/2020/03/19/register-now-for-spring-live-an-interactive-virtual-24-hour-long-conference-for-you-spring-fans" />
@@ -1284,199 +1347,6 @@ compile &amp;#39;org.springframework.cloud:spring-cloud-starter-netflix-eureka-c
 &lt;a href="https://docs.spring.io/spring-security/site/docs/5.3.0.RELEASE/reference/htmlsingle/"&gt;Reference&lt;/a&gt;
 | &lt;a href="https://stackoverflow.com/questions/tagged/spring-security"&gt;Help&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
-&lt;!-- rendered by Sagan Renderer Service --&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Session Dragonfruit-RC1, Corn-SR2 and Bean-SR10 Released</title>
-    <link rel="alternate" href="https://spring.io/blog/2020/03/04/spring-session-dragonfruit-rc1-corn-sr2-and-bean-sr10-released" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Eleftheria Stein-Kousathana</name>
-    </author>
-    <id>tag:spring.io,2020-03-04:3984</id>
-    <updated>2020-03-04T22:20:26Z</updated>
-    <content type="html">&lt;div class="paragraph"&gt;
-&lt;p&gt;On behalf of the community I’m pleased to announce the releases of Spring Session &lt;code&gt;Dragonfruit-RC1&lt;/code&gt;, &lt;code&gt;Corn-SR2&lt;/code&gt; and &lt;code&gt;Bean-SR10&lt;/code&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="sect1"&gt;
-&lt;h2 id="spring-session-dragonfruit-rc1"&gt;&lt;a class="anchor" href="#spring-session-dragonfruit-rc1"&gt;&lt;/a&gt;Spring Session Dragonfruit-RC1&lt;/h2&gt;
-&lt;div class="sectionbody"&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;The &lt;code&gt;Dragonfruit-RC1&lt;/code&gt; release is based on:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Spring Session core modules &lt;code&gt;2.3.0.RC1&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Spring Session Data Geode &lt;code&gt;2.3.0.RC1&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Spring Session Data MongoDB &lt;code&gt;2.3.0.RC1&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;Additional details of these releases can be found in &lt;a href="https://github.com/spring-projects/spring-session/milestone/73?closed=1"&gt;the changelog&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="sect1"&gt;
-&lt;h2 id="spring-session-corn-sr2"&gt;&lt;a class="anchor" href="#spring-session-corn-sr2"&gt;&lt;/a&gt;Spring Session Corn-SR2&lt;/h2&gt;
-&lt;div class="sectionbody"&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;The &lt;code&gt;Corn-SR2&lt;/code&gt; release is based on:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Spring Session core modules &lt;code&gt;2.2.2.RELEASE&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Spring Session Data Geode &lt;code&gt;2.2.3.RELEASE&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Spring Session Data MongoDB &lt;code&gt;2.2.3.RELEASE&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;Additional details of these releases can be found in &lt;a href="https://github.com/spring-projects/spring-session/milestone/75?closed=1"&gt;the changelog&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="sect1"&gt;
-&lt;h2 id="spring-session-bean-sr10"&gt;&lt;a class="anchor" href="#spring-session-bean-sr10"&gt;&lt;/a&gt;Spring Session Bean-SR10&lt;/h2&gt;
-&lt;div class="sectionbody"&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;The &lt;code&gt;Bean-SR10&lt;/code&gt; release is based on:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Spring Session core modules &lt;code&gt;2.1.11.RELEASE&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Spring Session Data Geode &lt;code&gt;2.1.9.RELEASE&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Spring Session Data MongoDB &lt;code&gt;2.1.7.RELEASE&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;Additional details of these releases can be found in &lt;a href="https://github.com/spring-projects/spring-session/milestone/74?closed=1"&gt;the changelog&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="https://projects.spring.io/spring-session/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://docs.spring.io/spring-session/docs/2.3.0.RC1/reference/html5/"&gt;Documentation&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-session/issues"&gt;Issues&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-session"&gt;Gitter&lt;/a&gt; | &lt;a href="https://stackoverflow.com/questions/tagged/spring-session"&gt;Stack Overflow&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;!-- rendered by Sagan Renderer Service --&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Tips: Kotlin and Spring Security</title>
-    <link rel="alternate" href="https://spring.io/blog/2020/03/04/spring-tips-kotlin-and-spring-security" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Josh Long</name>
-    </author>
-    <id>tag:spring.io,2020-03-04:3982</id>
-    <updated>2020-03-04T03:19:49Z</updated>
-    <content type="html">&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/V1ce8RdTdo0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
-&lt;p&gt;Hi, Spring fans! Welcome to another installment of &lt;em&gt;Spring Tips&lt;/em&gt;. In this episode we&amp;rsquo;re going to look at the new Kotlin DSL for Spring Security. I love Kotlin. I introduced Kotlin in several other Spring Tips videos: &lt;a href="https://spring.io/blog/2016/10/19/spring-tips-the-kotlin-programming-language"&gt;The Kotlin Programming Language&lt;/a&gt;, &lt;a href="https://spring.io/blog/2017/11/08/spring-tips-bootiful-kotlin-redux"&gt;Bootiful Kotlin Redux&lt;/a&gt;, and &lt;a href="https://spring.io/blog/2019/06/12/spring-tips-spring-s-support-for-kotlin-coroutines"&gt;Spring&amp;rsquo;s Support for Coroutines&lt;/a&gt;. Some of those videos are &lt;em&gt;very&lt;/em&gt; old! There are already a number of different projects in the Spring diaspora that are shipping Kotlin DSLs. They include, among others, Spring Framework, Spring Webflux, Spring Data, Spring Cloud Contract and Spring Cloud Gateway. And now, Spring Security! &lt;/p&gt;
-&lt;p&gt;Spring Security is an amazing project - it solves some of the hardest problems in the industry and helps people secure their applications. And, as if that weren&amp;rsquo;t enough, it&amp;rsquo;s displayed a steadfast determination to make security &lt;em&gt;easy&lt;/em&gt;. If you ever used Spring Security in its earliest incarnations, you&amp;rsquo;d know that it required &lt;em&gt;loads&lt;/em&gt; of XML - pages! - to get anything done. That improved to the point where in Spring Security 3 you could lock down an applicatino with common sense defaults with one or two stanzas of XML. Then, in Spring Security 4 they introduced a Java DSL that gave people the power of their compilers to help them validate things. Gradually, over time, Spring Security also introduced common sense defaults. Nowadays, you can register a &lt;code&gt;UserDetailsService&lt;/code&gt; and Spring Security will lock down all HTTP endpoints in a Servlet-based HTTP application and require authentication. Couldn&amp;rsquo;t be easier! Or could it? In Spring Security 5.2, they introduced some much-appreciated refinements to Spring Security. Now, in addition to using the fluid Java config DSL of yore, there&amp;rsquo;s also a new approach where you can provide a lambda and be given a context object that you can then use. No longer do you need to indent your Spring Security APIs for their intent to be understood! And now, in this installment, we&amp;rsquo;re going to take things to the next level with a very quick look at the brand new Spring Security Kotlin DSL. &lt;/p&gt;
-&lt;p&gt;Remember, Spring Security addresses two orthagonal concerns: authentication and authorization. Authentication answers the question: &amp;ldquo;&lt;em&gt;who&lt;/em&gt; is making the request?&amp;rdquo; Is it Josh, or Jane? Authorization answers the question &amp;ldquo;what permissions does the requester have once inside the system?&amp;rdquo; Authentication is all about plugging in identity providers. There are a million ways to do that (Active Directory, in-memory usernames and passwords, LDAP, SAML, etc.) It&amp;rsquo;s more about plugging in implementations. We&amp;rsquo;re just going to use an in-memory username and password authentication manager since we need it and that&amp;rsquo;s not where the DSL really shines. &lt;/p&gt;
-&lt;p&gt;DSLs are most useful not when swapping out implementations of a given type, but when describing rules or customizing behavior. So, we&amp;rsquo;ll use the Spring Security DSL to customize the authorization behavior. &lt;/p&gt;
-&lt;p&gt;The following is a Spring Boot-based application that uses Spring Security. I generated a new project from the &lt;a href="http://start.Spring.io"&gt;Spring Initializr&lt;/a&gt; that uses Kotlin, and uses Spring Security and Spring Boot 2.3.M2 or later. It uses the functional bean registration DSL to programatically register beans. We talked about programatic bean registration &lt;a href="https://spring.io/blog/2017/03/01/spring-tips-programmatic-bean-registration-in-spring-framework-5"&gt;in a &lt;em&gt;Spring Tips&lt;/em&gt; video from waaaaay back in 2017&lt;/a&gt;. Granted, that video demonstrated its use in Java, but the application is basically the same in Kotlin: you register a bean by wrapping it a call to the &lt;code&gt;bean&lt;/code&gt; function. &lt;/p&gt;
-&lt;p&gt;The first bean is the &lt;code&gt;InMemoryUserDetailsManager&lt;/code&gt;. The second bean is a functional HTTP endpoint, &lt;code&gt;/greetings&lt;/code&gt;. When an HTTP request comes in, we extract the authenticated principal from the current request, extract the name and then build a &lt;code&gt;ServerResponse&lt;/code&gt; whose body will be represented by a &lt;code&gt;Map&amp;lt;String,String&amp;gt;&lt;/code&gt;. &lt;/p&gt;
-&lt;p&gt;The interesting bit is the class &lt;code&gt;KotlinSecurityConfiguration&lt;/code&gt;. It extends &lt;code&gt;WebSecurityConfigurerAdapter&lt;/code&gt;. There are a few methods we might override there, but I chose to override the &lt;code&gt;configure&lt;/code&gt; method to specify two things: that I wanted to opt-in to HTTP BASIC authentication, and to specify what routes require authentication and which are wide-open. The configuration below stipultes that all requests to &lt;code&gt;/greetings/**&lt;/code&gt; (the &lt;code&gt;/greetings/&lt;/code&gt; endpoint, and anything below it, like &lt;code&gt;/greetings/foo&lt;/code&gt;) must be authenticated. The second rule says that everything else is wide-open. It&amp;rsquo;s very important that the more specific rule - &lt;code&gt;/greetings/**&lt;/code&gt; - come before the more wide-open rule. The rules are evaluated in order, from top to bottom. If we&amp;rsquo;d put the second rule first, then it would match for every request and we&amp;rsquo;d never need to evaluate the rule for &lt;code&gt;/greetings&lt;/code&gt; - it would be left effectively wide-open! &lt;/p&gt;
-&lt;pre&gt;&lt;code class="prettyprint kotlin"&gt;package com.example.kotlinsecurity&#xD;
-&#xD;
-import org.springframework.boot.autoconfigure.SpringBootApplication&#xD;
-import org.springframework.boot.runApplication&#xD;
-import org.springframework.context.annotation.Bean&#xD;
-import org.springframework.context.support.beans&#xD;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity&#xD;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity&#xD;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter&#xD;
-import org.springframework.security.config.web.servlet.invoke&#xD;
-import org.springframework.security.core.userdetails.User&#xD;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager&#xD;
-import org.springframework.web.servlet.function.ServerResponse&#xD;
-import org.springframework.web.servlet.function.router&#xD;
-&#xD;
-@SpringBootApplication&#xD;
-class KotlinSecurityApplication&#xD;
-&#xD;
-@EnableWebSecurity&#xD;
-class KotlinSecurityConfiguration : WebSecurityConfigurerAdapter() {&#xD;
-&#xD;
-	override fun configure(http: HttpSecurity?) {&#xD;
-		http {&#xD;
-			httpBasic {}&#xD;
-			authorizeRequests {&#xD;
-				authorize(&amp;quot;/greetings/**&amp;quot;, hasAuthority(&amp;quot;ROLE_ADMIN&amp;quot;))&#xD;
-				authorize(&amp;quot;/**&amp;quot;, permitAll)&#xD;
-			}&#xD;
-		}&#xD;
-	}&#xD;
-}&#xD;
-&#xD;
-fun main(args: Array&amp;lt;String&amp;gt;) {&#xD;
-	runApplication&amp;lt;KotlinSecurityApplication&amp;gt;(*args) {&#xD;
-		addInitializers(beans {&#xD;
-			bean {&#xD;
-&#xD;
-				fun user(user: String, pw: String, vararg roles: String) =&#xD;
-                    User.withDefaultPasswordEncoder().username(user).password(pw).roles(*roles).build()&#xD;
-&#xD;
-				InMemoryUserDetailsManager(user(&amp;quot;jlong&amp;quot;, &amp;quot;pw&amp;quot;, &amp;quot;USER&amp;quot;), user(&amp;quot;rwinch&amp;quot;, &amp;quot;pw1&amp;quot;, &amp;quot;USER&amp;quot;, &amp;quot;ADMIN&amp;quot;))&#xD;
-			}&#xD;
-			bean {&#xD;
-				router {&#xD;
-					GET(&amp;quot;/greetings&amp;quot;) { request -&amp;gt;&#xD;
-						request.principal().map { it.name }.map { ServerResponse.ok().body(mapOf(&amp;quot;greeting&amp;quot; to &amp;quot;Hello, $it&amp;quot;)) }.orElseGet { ServerResponse.badRequest().build() }&#xD;
-					}&#xD;
-				}&#xD;
-			}&#xD;
-		})&#xD;
-	}&#xD;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;&lt;a href="#conclusion" class="anchor" name="conclusion"&gt;&lt;/a&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;In this installment, we introduced Spring Security&amp;rsquo;s new Kotlin DSL. There&amp;rsquo;s more text than there is code because, and this is profound, Spring Security does a &lt;em&gt;lot&lt;/em&gt; of stuff for you, so that the surface area of the API is literally the bare minimum in customizations you want to do beyond the already sensible defaults. I hope you learned something new, and will give the Spring Security DSL a shot. &lt;/p&gt;
-&lt;!-- rendered by Sagan Renderer Service --&gt;</content>
-  </entry>
-  <entry>
-    <title>This Week in Spring - March 3rd, 2020</title>
-    <link rel="alternate" href="https://spring.io/blog/2020/03/03/this-week-in-spring-march-3rd-2020" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Josh Long</name>
-    </author>
-    <id>tag:spring.io,2020-03-03:3981</id>
-    <updated>2020-03-03T21:42:00Z</updated>
-    <content type="html">&lt;p&gt;Hi, Spring fans! Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! This week, I&amp;rsquo;m home, in San Francisco, California, in the US, where the fears around Coronavirus have heated up and made things problematic for those of us who travel. It looks like, at least for the immediate future, I&amp;rsquo;ll be - basically - grounded. Stay safe out there, my friends. &lt;/p&gt;
-&lt;p&gt;The good news is that this will let me get to a ton more other things &lt;a href="http://spring.io/blogs"&gt;like the blogs&lt;/a&gt;, &lt;a href="http://twitter.com/BootifulPodcast"&gt;A Bootiful Podcast&lt;/a&gt; and &lt;a href="http://twitter.com/SpringTipsLive"&gt;Spring Tips&lt;/a&gt; and of course my &lt;a href="http://ReactiveSpring.io"&gt;Reactive Spring book&lt;/a&gt;. And of course, we&amp;rsquo;ve got a ton of things to get to today in today&amp;rsquo;s installment of &lt;em&gt;This Week in Spring&lt;/em&gt;, so let&amp;rsquo;s get to it! &lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/03/02/getting-started-with-rsocket-spring-boot-server"&gt;Getting Started With RSocket: Spring Boot Server&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/02/28/a-bootiful-podcast-spring-cloud-contract-lead-marcin-grzejszczak-on-spring-cloud-contract-spring-cloud-sleuth-continuous-integration-and-more"&gt;A Bootiful Podcast: Spring Cloud Contract lead Marcin Grzejszczak on Spring Cloud Contract, Spring Cloud Sleuth, Continuous Integration and more&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/02/27/spring-boot-2-2-5-released"&gt;Spring Boot 2.2.5 released&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/02/27/spring-boot-2-1-13-released"&gt;Spring Boot 2.1.13 released&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/02/27/cve-reports-published-for-reactor-netty"&gt;CVE Reports Published for Reactor Netty&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/02/26/spring-data-moore-sr5-and-lovelace-sr16-released"&gt;Spring Data Moore SR5 and Lovelace SR16 released&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://m.youtube.com/watch?v=70gWx2APczA"&gt;Another fine installment from Greg Turnquist, this one on Messaging with Spring Boot&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;This is an interesting post on &lt;a href="https://dev.to/onlinepajak/database-schema-changes-with-hibernate-and-spring-boot-3f5k"&gt;database schema changes with Hibernate and Spring Boot&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://twitter.com/springcloud/status/1233469658910674946"&gt;Don&amp;rsquo;t miss the opportunity to meet Spring Cloud Gateway lead Spencer Gibb&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Congrats to the Confluent team &lt;a href="https://twitter.com/gAmUssA/status/1233183125150355456?s=20"&gt;on their new developer portal&lt;/a&gt; chock full of good stuff!&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/02/27/cve-reports-published-for-reactor-netty"&gt;There are new Spring Boot releases, including CVE fixes for Netty&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://twitter.com/cloudfoundry/status/1233045258809888768"&gt;I love the Cloud Foundry on Kubernetes opportunity&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://twitter.com/david_syer/status/1232675337814921217?s=12"&gt;The good Dr. Dave Syer demonstrating how to start a Spring Boot application, like the Petclinic, used a pre-cached JVM tool&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://bddy.me/2SZLsmS"&gt;The Cloud Foundry community is looking for a handful of volunteers to help reconstitute a multi-member vulnerability management team for CFF projects. &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://github.com/spring-projects/spring-boot/issues/19988"&gt;There&amp;rsquo;s now out-of-the-box support for R2DBC in Spring Boot&lt;/a&gt;!&lt;/li&gt;
-  &lt;li&gt;&lt;a href="http://spring.io"&gt;have you seen the new Spring website?&lt;/a&gt; - it&amp;rsquo;s perty!&lt;/li&gt;
-&lt;/ul&gt;
 &lt;!-- rendered by Sagan Renderer Service --&gt;</content>
   </entry>
 </feed>

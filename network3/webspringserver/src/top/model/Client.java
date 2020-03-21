@@ -104,6 +104,10 @@ public class Client {
 			if (oos != null) {
 				try {
 					oos.writeObject(msg);
+					System.out.println("webclient.top");
+					System.out.println(msg.getId());
+					System.out.println(msg.getTxt());
+					System.out.println(msg.getTid());
 				} catch (IOException e) {
 
 					try {

@@ -32,7 +32,7 @@ public class MyFCMService extends FirebaseMessagingService {
 
     String TAG = "===";
 
-    String msg, title;
+    String msg, title, data, control;
 
     NotificationManagerCompat notificationManager;
 
@@ -43,9 +43,11 @@ public class MyFCMService extends FirebaseMessagingService {
 
         title = remoteMessage.getNotification().getTitle();
         msg = remoteMessage.getNotification().getBody();
+        control = remoteMessage.getData().get("control");
+        data = remoteMessage.getData().get("data");
 
 
-        Log.d(TAG, "title : " + title + " msg : " + msg);
+        Log.d(TAG, "title : " + title + " msg : " + msg + " control : " + control + " data : " + data);
 
         HashMap<String, ObjectOutputStream> iotmaps = MainActivity.maps;
 
@@ -53,7 +55,7 @@ public class MyFCMService extends FirebaseMessagingService {
         Iterator<ObjectOutputStream> its = cols.iterator();
         while (its.hasNext()) {
             try {
-                its.next().writeObject(new Msg(title, msg, "iot"));
+                its.next().writeObject(new Msg(title, data, control));
             } catch (IOException e) {
                 e.printStackTrace();
             }

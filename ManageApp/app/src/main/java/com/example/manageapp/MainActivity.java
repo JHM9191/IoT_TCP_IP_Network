@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     String TAG = "===";
     int num = 0;
 
-    String carId;
+    String carId = "car1";
     String control;
     String data;
     ArrayList<String> carIds;
@@ -70,11 +70,11 @@ public class MainActivity extends AppCompatActivity {
         // ActionBar 숨기기
         getSupportActionBar().hide();
 
-        if (savedInstanceState != null) {
-            control = savedInstanceState.getString("control");
-            data = savedInstanceState.getString("data");
-            connectionCheck(carId, control, data);
-        }
+//        if (savedInstanceState != null) {
+//            control = savedInstanceState.getString("control");
+//            data = savedInstanceState.getString("data");
+//            connectionCheck(carId, control, data);
+//        }
 
         makeUI();
 
@@ -140,62 +140,71 @@ public class MainActivity extends AppCompatActivity {
 
 
     // Displays whether all parts are logged in to server.
-    public int connectionCheck(String carId, String control, String data) {
+    public void connectionCheck(String carId, String control, String data) {
+        Log.d(TAG, control + " | " + data);
         if (data.equals("77777")) { // 77777 : login
             if (control.equals("engine")) {
                 iv_engine.setVisibility(View.VISIBLE);
                 pb_engine.setVisibility(View.GONE);
-                return 1;
             } else if (control.equals("speed")) {
                 iv_speed.setVisibility(View.VISIBLE);
                 pb_speed.setVisibility(View.GONE);
-                return 1;
             } else if (control.equals("temperature")) {
                 iv_temp.setVisibility(View.VISIBLE);
                 pb_temperature.setVisibility(View.GONE);
-                return 1;
             } else if (control.equals("gas")) {
                 iv_gas.setVisibility(View.VISIBLE);
                 pb_gas.setVisibility(View.GONE);
-                return 1;
             }
             Toast.makeText(getApplicationContext(), control + " is connected", Toast.LENGTH_SHORT).show();
         } else if (data.equals("88888")) { // 88888 : logout
             if (control.equals("engine")) {
                 iv_engine.setVisibility(View.GONE);
                 pb_engine.setVisibility(View.VISIBLE);
-                return 0;
             } else if (control.equals("speed")) {
                 iv_speed.setVisibility(View.GONE);
                 pb_speed.setVisibility(View.VISIBLE);
-                return 0;
+                tv_speed.setText("0 Km/h");
             } else if (control.equals("temperature")) {
                 iv_temp.setVisibility(View.GONE);
                 pb_temperature.setVisibility(View.VISIBLE);
-                return 0;
             } else if (control.equals("gas")) {
                 iv_gas.setVisibility(View.GONE);
                 pb_gas.setVisibility(View.VISIBLE);
-                return 0;
             }
             Toast.makeText(getApplicationContext(), control + " is disconnected", Toast.LENGTH_SHORT).show();
         }
-        return 0;
     }
 
     // Displays whether all parts are logged in to server.
-    public void displayData(String carId, String control, String data) {
+    public void displayData(String carId, String control, final String data) {
         if (control.equals("engine")) {
-            tv_speed.setText(data);
-        } else if (control.equals("speed")) {
-            iv_speed.setVisibility(View.VISIBLE);
-            pb_speed.setVisibility(View.GONE);
-        } else if (control.equals("temperature")) {
-            iv_temp.setVisibility(View.VISIBLE);
-            pb_temperature.setVisibility(View.GONE);
+            if (data.equals("1")) {
+                Toast.makeText(this, "Engine START", Toast.LENGTH_SHORT).show();
+            } else if (data.equals("0")) {
+                Toast.makeText(this, "Engine STOP", Toast.LENGTH_SHORT).show();
+            }
+        } else if (control.equals("speed") | carId.equals("speed")) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tv_speed.setText(data + " Km/h");
+                }
+            });
+        } else if (control.equals("temperature") | carId.equals("temperature")) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tv_temperature.setText(data + " °C");
+                }
+            });
         } else if (control.equals("gas")) {
-            iv_gas.setVisibility(View.VISIBLE);
-            pb_gas.setVisibility(View.GONE);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tv_gas.setText(data + " ppm");
+                }
+            });
         }
     }
 
@@ -211,9 +220,13 @@ public class MainActivity extends AppCompatActivity {
 
                 if (control.equals("login") && data.equals("1")) {
                     new SendWebServer("car1", "1", null);
+                } else if (data.equals("77777") | data.equals("88888")) {
+                    connectionCheck(carId, control, data);
+                } else {
+                    Log.d(TAG, "data received. displaying data..");
+                    displayData(carId, control, data);
                 }
-                int result = connectionCheck(carId, control, data);
-                displayData(carId, control, data);
+
 
             }
         }
@@ -290,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_cold_off:
                 Toast.makeText(this, "Aircon OFF Clicked", Toast.LENGTH_SHORT).show();
-                new SendWebServer("car1", "0", "cold").start();
+                new SendWebServer("car1", "0", "temperature").start();
                 break;
             case R.id.btn_hot_1:
                 Toast.makeText(this, "Heater Level 1 Clicked", Toast.LENGTH_SHORT).show();
@@ -314,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_hot_off:
                 Toast.makeText(this, "Heater OFF Clicked", Toast.LENGTH_SHORT).show();
-                new SendWebServer("car1", "0", "hot").start();
+                new SendWebServer("car1", "0", "temperature").start();
                 break;
             case R.id.bt_deviceCheck:
                 new CheckCarState().start();

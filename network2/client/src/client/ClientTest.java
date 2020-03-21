@@ -2,7 +2,7 @@ package client;
 
 public class ClientTest {
 
-	static String CAN_ID = "temperature";
+	static String CAN_ID = "engine";
 	static String CAR_ID = "car1";
 
 	public static void main(String[] args) {

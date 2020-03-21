@@ -54,7 +54,6 @@ public class Server {
 //							continue;
 //						}
 						new Receiver(socket).start();
-						System.out.println("HI");
 						// outputstream 을 만들어주고 끝낼 예정
 
 					} catch (IOException e) {
@@ -92,23 +91,19 @@ public class Server {
 		Socket socket;
 
 		public Receiver(Socket socket) {
-			System.out.println("1");
 			// Client 에서는 Output stream , Server 에서는 Input Stream //
 			this.socket = socket;
-			System.out.println("2");
-			System.out.println(socket.isConnected());
-			System.out.println((socket == null) + "");
+			System.out.println("socket.isConnected() : " + socket.isConnected());
+			System.out.println("socket == null : " + (socket == null));
 //			is = socket.getInputStream();
 //			System.out.println(socket.getInputStream().read() + "");
 //			System.out.println(is.read() + "");
-			System.out.println("3");
 			try {
 				is = socket.getInputStream();
 				ois = new ObjectInputStream(is);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println("4");
 
 //			os = socket.getOutputStream();
 //			oos = new ObjectOutputStream(os);
@@ -120,11 +115,8 @@ public class Server {
 
 		@Override
 		public void run() {
-			System.out.println("5");
 			// while : Client 와 연결이 끊어지지 않는 한 계속 //
-			System.out.println("6");
 			while (ois != null) {
-				System.out.println("7");
 				Msg msg = null;
 				try {
 					System.out.println("Receiver run() while(ois !=null) try");
@@ -157,13 +149,13 @@ public class Server {
 					sendMsg(msg);
 
 				} catch (Exception e) {
-					e.printStackTrace();
+//					e.printStackTrace();
 					// 비정상 종료하여도 어떤 사람이 나가는지 확인 가능. //
 					maps.remove(socket.getInetAddress().toString());
 					System.out.println(socket.getInetAddress() + ":Exit");
 					System.out.println("Visitor size : " + maps.size());
-					break; // dis.readUTF 에 문제가 생기면 while roop 중단.
-				} 
+					break; // dis.readUTF 에 문제가 생기면 while loop 중단.
+				}
 			}
 
 			System.out.println("ois == null");
@@ -195,6 +187,8 @@ public class Server {
 			System.out.println("Sender run() msg.getId : " + msg.getId());
 			System.out.println("Sender run() msg.getTxt : " + msg.getTxt());
 			System.out.println("Sender run() msg.getTid : " + msg.getTid());
+			System.out.println();
+
 			// HashMap 에 있는 oos 를 꺼낸다음 for 문을 돌리면서 전송한다. //
 			System.out.println("Sender run() entered");
 			Collection<ObjectOutputStream> cols = maps.values();
@@ -226,6 +220,7 @@ public class Server {
 			System.out.println("Sender2 run() msg.getId : " + msg.getId());
 			System.out.println("Sender2 run() msg.getTxt : " + msg.getTxt());
 			System.out.println("Sender2 run() msg.getTid : " + msg.getTid());
+			System.out.println();
 			try {
 //				maps.get("/192.168.43.180").writeObject(msg);
 //				maps.get("/192.168.43.53").writeObject(msg);
@@ -259,26 +254,26 @@ public class Server {
 		}
 	}
 
-	public void serverStart() {
-		Scanner sc = new Scanner(System.in);
-		while (true) {
-			System.out.println("Input ip");
-			String ip = sc.nextLine();
-			System.out.println("Input Msg");
-			String txt = sc.nextLine();
-			Msg msg = null;
-			if (txt.equals("q"))
-				break;
-			// 귓속말 기능을 넣기위해 ip도 입력받는다. constructor 에도 ip 추가
-			if (ip == null || ip.equals("")) {
-				msg = new Msg("Admin", txt, null);
-			} else {
-				msg = new Msg("Admin", txt, ip);
-			}
-			sendMsg(msg);
-		}
-		sc.close();
-	}
+//	public void serverStart() {
+//		Scanner sc = new Scanner(System.in);
+//		while (true) {
+//			System.out.println("Input ip");
+//			String ip = sc.nextLine();
+//			System.out.println("Input Msg");
+//			String txt = sc.nextLine();
+//			Msg msg = null;
+//			if (txt.equals("q"))
+//				break;
+//			// 귓속말 기능을 넣기위해 ip도 입력받는다. constructor 에도 ip 추가
+//			if (ip == null || ip.equals("")) {
+//				msg = new Msg("Admin", txt, null);
+//			} else {
+//				msg = new Msg("Admin", txt, ip);
+//			}
+//			sendMsg(msg);
+//		}
+//		sc.close();
+//	}
 
 	// 메인 쓰레드 //
 	public static void main(String[] args) {
@@ -287,7 +282,7 @@ public class Server {
 		try {
 			// server 호출 = 쓰레드 실행 //
 			server = new Server(8888);
-			server.serverStart();
+//			server.serverStart();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
