@@ -28,7 +28,7 @@
 	</build>
 	<properties>
 		<java-version>1.8</java-version>
-		<org.springframework-version>4.2.5.RELEASE</org.springframework-version>
+		<org.springframework-version>5.3.19</org.springframework-version>
 		<org.aspectj-version>1.6.5</org.aspectj-version>
 		<org.slf4j-version>1.7.18</org.slf4j-version>
 	</properties>
